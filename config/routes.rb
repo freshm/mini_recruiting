@@ -1,9 +1,20 @@
 MiniRecruiting::Application.routes.draw do
-  devise_for :users
-  devise_for :applicants
+  resources :advertisements
 
-  root :to => 'users#index'
+
+  devise_for :users, controllers: {sessions: "sessions"}
+  devise_for :applicants, :controllers => {:registrations => "applicant_registrations"}
+  devise_for :admin
+
+  root :to => 'advertisements#index'
   resources :users
+  
+  namespace :admin do
+    resources :users
+    resources :advertisements
+    root :to => 'users#index'
+    
+  end
 
 
   # The priority is based upon order of creation:

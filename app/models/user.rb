@@ -9,4 +9,8 @@ class User < ActiveRecord::Base
   attr_accessible :firstname, :lastname
   
   validates_presence_of :firstname, :lastname
+  
+  def fullname
+    "#{firstname} #{lastname}"
+  end
 end

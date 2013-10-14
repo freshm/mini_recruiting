@@ -51,3 +51,6 @@ end
 
 
 gem 'formtastic'
+gem 'formtastic-bootstrap'
+
+gem 'bootstrap-generators', '~> 3.0'
