@@ -7,12 +7,10 @@
     <span class="glyphicon glyphicon-pencil"></span>
     Edit
   <% end %>
-  <h1>Show advertisement</h1>
+  <h1><%= @advertisement.title %></h1>
 </div>
 
 <dl class="dl-horizontal">
-  <dt>Title:</dt>
-  <dd><%= @advertisement.title %></dd>
 
   <dt>Location:</dt>
   <dd><%= @advertisement.location %></dd>
@@ -20,10 +18,11 @@
   <dt>Description:</dt>
   <dd><%= @advertisement.description %></dd>
 
-  <dt>Standort:</dt>
-  <dd><%= @advertisement.standort %></dd>
-
   <dt>Requirement:</dt>
   <dd><%= @advertisement.requirement %></dd>
+  
+  <%= link_to "Apply now!", "#", class: "btn btn-primary pull-right" %>
 
 </dl>
+
+
