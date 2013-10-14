@@ -1,9 +1,9 @@
 class Admin < User
-  has_many :advertisements
+  has_many :advertisements, dependent: :destroy
   def admin?
     true
-  end 
-  
+  end
+
   def self.model_name
     User.model_name
   end
