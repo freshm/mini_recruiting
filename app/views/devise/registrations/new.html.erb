@@ -1,0 +1,24 @@
+<h2>Sign up</h2>
+
+<%= semantic_form_for(resource, :as => resource_name, :url => registration_path(resource_name)) do |f| %>
+  <%= devise_error_messages! %>
+  
+  <%= f.inputs :name => "Personal" do %>
+      <%= f.input :firstname %>
+      <%= f.input :lastname %>
+      <%= f.input :email %>
+  <% end %>
+  
+  <%= f.inputs :name => "Security" do %>
+      <%= f.input :password %>
+      <%= f.input :password_confirmation %>
+  <% end %>
+  
+
+  <%= f.actions do %>
+      <%= f.action :submit, :as => :button %>
+      <%= f.action :cancel, :as => :link %>
+    <% end %>
+<% end %>
+
+<%= render "devise/shared/links" %>
