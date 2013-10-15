@@ -1,11 +1,14 @@
 require 'spec_helper'
 
 describe "UserLogins" do
-  describe "GET /user_logins" do
-    it "works! (now write some real specs)" do
-      # Run the generator again with the --webrat flag if you want to use webrat methods/matchers
-      get user_logins_path
-      response.status.should be(200)
+  describe "after login" do
+    it "is redirected to admin root path" do
+      admin = FactoryGirl.create(:admin)
+      visit new_user_session_path
+      click_link "password"
+      fill_in "Email", :with => admin.email
+      fill_in "Password", with: "testpass"
+        
     end
   end
 end
