@@ -1,4 +1,7 @@
 MiniRecruiting::Application.routes.draw do
+  resources :job_applications
+
+
   resources :advertisements
 
 
