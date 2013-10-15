@@ -44,6 +44,9 @@ GEM
       rack (>= 1.0.0)
       rack-test (>= 0.5.4)
       xpath (~> 2.0)
+    cells (3.8.8)
+      actionpack (>= 3.0)
+      railties (>= 3.0)
     celluloid (0.15.2)
       timers (~> 1.1.0)
     coderay (1.0.9)
@@ -193,6 +196,7 @@ DEPENDENCIES
   bootstrap-sass
   cancan
   capybara
+  cells
   coffee-rails (~> 3.2.1)
   devise
   factory_girl_rails

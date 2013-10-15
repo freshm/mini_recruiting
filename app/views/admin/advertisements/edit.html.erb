@@ -3,7 +3,11 @@
     <span class="glyphicon glyphicon-list-alt"></span>
     Back
   <% end %>
-  <h1>New advertisement</h1>
+  <%= link_to @advertisement, :class => 'btn btn-primary' do %>
+    <span class="glyphicon glyphicon-info-sign"></span>
+    Show
+  <% end %>
+  <h1>Editing advertisement</h1>
 </div>
 
 <%= render 'form' %>

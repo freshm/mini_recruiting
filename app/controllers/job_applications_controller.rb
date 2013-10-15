@@ -14,6 +14,7 @@ class JobApplicationsController < ApplicationController
   # GET /job_applications/1.json
   def show
     @job_application = JobApplication.find(params[:id])
+    @advertisement = Advertisement.find_by_id(@job_application.advertisement_id)
 
     respond_to do |format|
       format.html # show.html.erb
@@ -24,6 +25,7 @@ class JobApplicationsController < ApplicationController
   # GET /job_applications/new
   # GET /job_applications/new.json
   def new
+    @advertisement = Advertisement.find_by_id(params[:advertisement_id]);
     @job_application = JobApplication.new
 
     respond_to do |format|
@@ -41,11 +43,17 @@ class JobApplicationsController < ApplicationController
   # POST /job_applications.json
   def create
     @job_application = JobApplication.new(params[:job_application])
-
+    @advertisement = Advertisement.find_by_id(params[:advertisement_id]);
+    if user_signed_in? && !current_user.admin?
+      applicant = Applicant.find_by_id(current_user.id)
+      @job_application.applicant_id = current_user.id
+      @job_application.advertisement_id = @advertisement.id
+    end
+    
     respond_to do |format|
       if @job_application.save
-        format.html { redirect_to @job_application, notice: 'Job application was successfully created.' }
-        format.json { render json: @job_application, status: :created, location: @job_application }
+        format.html { redirect_to applicant_job_application_path(current_user.id, @job_application), notice: 'Job application was successfully created.' }
+        format.json { render json: @job_application, status: :created, location: [applicant, @job_application] }
       else
         format.html { render action: "new" }
         format.json { render json: @job_application.errors, status: :unprocessable_entity }

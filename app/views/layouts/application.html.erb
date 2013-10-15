@@ -52,14 +52,6 @@
     <% end %>
     
     <%= yield %>
-    
-    
-    <% if Rails.env.development? %>
-      <br />
-      <h3>Debug</h3>
-      <hr />
-      <%= debug session %>
-    <% end %>
   </div>
 </body>
 </html>

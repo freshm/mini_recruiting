@@ -1,22 +1,25 @@
 MiniRecruiting::Application.routes.draw do
-  resources :job_applications
-
-
-  resources :advertisements
-
+  root :to => 'advertisements#index'
+  
+  resources :advertisements, only: :show do
+    resources :job_applications, only: [:new, :create]
+  end
+  
+  scope "/applicants/:applicant_id", as: "applicant" do
+    resources :job_applications, only: [:edit, :update, :show]
+  end
+  
 
   devise_for :users, controllers: {sessions: "sessions"}
   devise_for :applicants, :controllers => {:registrations => "applicant_registrations"}
   devise_for :admin
-
-  root :to => 'advertisements#index'
+  
   resources :users
   
   namespace :admin do
     resources :users
     resources :advertisements
     root :to => 'users#index'
-    
   end
 
 

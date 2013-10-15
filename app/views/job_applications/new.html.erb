@@ -1,9 +1,5 @@
 <div class="page-header">
-  <%= link_to job_applications_path, :class => 'btn btn-default' do %>
-    <span class="glyphicon glyphicon-list-alt"></span>
-    Back
-  <% end %>
-  <h1>New job_application</h1>
+  <h1>Application for <%= @advertisement.title %></h1>
 </div>
 
 <%= render 'form' %>

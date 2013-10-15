@@ -1,0 +1,10 @@
+<h2>Your Job Applications</h2>
+<% if @applications.any? %>
+  <table class="table">
+    <% @applications.each do |application| %>
+      <tr>
+        <td><%= link_to application.advertisement.title, advertisement_path(application.advertisement) %></td>
+      </tr>
+    <% end %>
+  </table>
+<% end %>
