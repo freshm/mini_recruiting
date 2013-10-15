@@ -2,15 +2,21 @@ require 'spec_helper'
 
 describe Admin do
   it "has a factory" do
-    admin = FactoryGirl.create(:admin)
+    FactoryGirl.create(:admin)
   end
 
   context "is created" do
-    before(:each) { @admin = FactoryGirl.build(:admin) }
+    before(:each) { @admin = FactoryGirl.create(:admin) }
 
     it "is invalid without a firstname" do
       @admin.firstname = ""
       @admin.should_not be_valid
+    end
+    
+    it "is invalid if the email is not unique" do
+      snd_admin = FactoryGirl.build(:admin)
+      snd_admin.email = @admin.email
+      snd_admin.save.should == false
     end
 
     it "is invalid without a lastname" do

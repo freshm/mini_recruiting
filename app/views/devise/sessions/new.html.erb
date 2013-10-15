@@ -14,4 +14,7 @@
   <div><%= f.submit "Sign in" %></div>
 <% end %>
 
-<%= render "devise/shared/links" %>
+<%if applicant_sign_in_path?(request.path) %> 
+  <%= link_to "Sign in as admin", new_admin_session_path, class: "btn btn-primary" %>
+<% end %>
+<!--<%= render "devise/shared/links" %>-->
