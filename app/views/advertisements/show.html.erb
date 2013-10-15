@@ -23,11 +23,11 @@
     <%= link_to "Apply now!", new_advertisement_job_application_path(@advertisement), class: "btn btn-primary pull-right" %>
   <% else %>
     <br /><hr />
-    <h3>You already applied for this Advertisement</h3>
-    <p>Your Details were:</p>
+    <h2>You already applied for this Advertisement</h2>
+    <h4>Your Details were:</h4>
     <p>Wage: <%= @advertisement.display_user_details(current_user)[0] %></p>
-    <p>Note: <%= @advertisement.display_user_details(current_user)[1] %></p>
-    <%= link_to "Want to change the details?", "#", class: "btn btn-danger" %>
+    <p>Note: <div><%= @advertisement.display_user_details(current_user)[1] %></div></p>
+    <%= link_to "Want to change the details?",  edit_applicant_job_application_path(current_user.id, @advertisement.display_user_details(current_user)[2]), class: "btn btn-danger" %>
   <% end %>
 
 </dl>

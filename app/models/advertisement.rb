@@ -18,6 +18,6 @@ class Advertisement < ActiveRecord::Base
     application = user.job_applications.find_by_advertisement_id(self.id)
     wage = application.wage || "You haven't entered a wage"
     application.note = "You haven't entered a note" if application.note.empty?
-    [wage, application.note]
+    [wage, application.note, application.id]
   end
 end

@@ -68,7 +68,7 @@ class JobApplicationsController < ApplicationController
 
     respond_to do |format|
       if @job_application.update_attributes(params[:job_application])
-        format.html { redirect_to @job_application, notice: 'Job application was successfully updated.' }
+        format.html { redirect_to advertisement_path(@job_application.advertisement_id), notice: 'Job application was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
