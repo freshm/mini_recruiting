@@ -19,8 +19,15 @@
   <dt>Requirement:</dt>
   <dd><%= @advertisement.requirement %></dd>
   
-  <% if user_signed_in? && !current_user.admin? %>
+  <% if user_signed_in? && !current_user.admin? && !@advertisement.already_taken_by_user?(current_user) %>
     <%= link_to "Apply now!", new_advertisement_job_application_path(@advertisement), class: "btn btn-primary pull-right" %>
+  <% else %>
+    <br /><hr />
+    <h3>You already applied for this Advertisement</h3>
+    <p>Your Details were:</p>
+    <p>Wage: <%= @advertisement.display_user_details(current_user)[0] %></p>
+    <p>Note: <%= @advertisement.display_user_details(current_user)[1] %></p>
+    <%= link_to "Want to change the details?", "#", class: "btn btn-danger" %>
   <% end %>
 
 </dl>
