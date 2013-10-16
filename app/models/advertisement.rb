@@ -7,7 +7,7 @@ class Advertisement < ActiveRecord::Base
   validates_presence_of :description, :location, :requirement, :title, :admin_id
   
   def already_taken_by_user?(user)
-    if user.job_applications.where(self.id).exists?
+    if JobApplication.where(advertisement_id: self.id, applicant_id: user.id).any?
       true
     else
       false
