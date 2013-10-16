@@ -52,7 +52,7 @@ class JobApplicationsController < ApplicationController
     
     respond_to do |format|
       if @job_application.save
-        format.html { redirect_to applicant_job_application_path(current_user.id, @job_application), notice: 'Job application was successfully created.' }
+        format.html { redirect_to @advertisement, notice: 'Job application was successfully created.' }
         format.json { render json: @job_application, status: :created, location: [applicant, @job_application] }
       else
         format.html { render action: "new" }
