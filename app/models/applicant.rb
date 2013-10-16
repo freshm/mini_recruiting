@@ -1,5 +1,5 @@
 class Applicant < User
-  has_many :job_applications
+  has_many :job_applications, dependent: :destroy
   has_many :advertisements, through: :job_application
   
   

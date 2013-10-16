@@ -1,41 +1,40 @@
-<div class="page-header">
-  <% if user_signed_in? && current_user.admin? %>
-    <%= link_to new_admin_advertisement_path, :class => 'btn btn-primary' do %>
-      <span class="glyphicon glyphicon-plus"></span>
-      New Advertisement
-    <% end %>
-  <% end %>
-  <h1>Current advertisements</h1>
-</div>
-
-<div class="table-responsive">
-  <table class="table table-striped table-bordered table-hover">
-    <thead>
-      <tr>
-            <th>Title</th>
-            <th>Location</th>
-            <th>Description</th>
-            <th>Requirement</th>
-            <% if admin_signed_in? %>
-            <th></th>
-            <th></th>
-            <th></th>
-            <% end %>
-      </tr>
-    </thead>
-
-    <tbody>
-      <%= content_tag_for(:tr, @advertisements) do |advertisement| %>
-            <td><%= advertisement.title %></td>
-            <td><%= advertisement.location %></td>
-            <td><%= advertisement.description %></td>
-            <td><%= advertisement.requirement %></td>
-        <% if admin_signed_in? %>
-            <td><%= link_to 'Show', advertisement %></td>
-          <td><%= link_to 'Edit', edit_advertisement_path(advertisement) %></td>
-          <td><%= link_to 'Destroy', advertisement, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+<div class="row">
+  <%= render "admin/sidebar" %>
+  <div class="col-md-8">
+    <div class="page-header">
+      <% if user_signed_in? && current_user.admin? %>
+        <%= link_to new_admin_advertisement_path, :class => 'btn btn-primary pull-right' do %>
+          <span class="glyphicon glyphicon-plus"></span>
+          New Advertisement
         <% end %>
       <% end %>
-    </tbody>
-  </table>
+      <h1>Current advertisements</h1>
+    </div>
+    
+    <div class="table-responsive">
+      <table class="table table-striped table-bordered table-hover">
+        <thead>
+          <tr>
+                <th>Title</th>
+                <th>Location</th>
+                <th>Description</th>
+                <th>Requirement</th>
+                <th></th>
+                <th></th>
+          </tr>
+        </thead>
+    
+        <tbody>
+          <%= content_tag_for(:tr, @advertisements) do |advertisement| %>
+                <td><%= advertisement.title %></td>
+                <td><%= advertisement.location %></td>
+                <td><%= advertisement.description %></td>
+                <td><%= advertisement.requirement %></td>
+                <td><%= link_to 'Edit', edit_admin_advertisement_path(advertisement) %></td>
+                <td><%= link_to 'Destroy', [:admin, advertisement], method: :delete, data: { confirm: 'Are you sure?' } %></td>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
 </div>

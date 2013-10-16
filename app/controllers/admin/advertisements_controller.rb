@@ -35,6 +35,7 @@ class Admin::AdvertisementsController < ApplicationController
   # GET /advertisements/1/edit
   def edit
     @advertisement = Advertisement.find(params[:id])
+    @advertisement.admin_id = current_user.id
   end
 
   # POST /advertisements
@@ -49,8 +50,8 @@ class Admin::AdvertisementsController < ApplicationController
 
     respond_to do |format|
       if @advertisement.save
-        format.html { redirect_to [:admin, @advertisement], notice: 'Advertisement was successfully created.' }
-        format.json { render json: @advertisement, status: :created, location: [:admin, @advertisement] }
+        format.html { redirect_to @advertisement, notice: 'Advertisement was successfully created.' }
+        format.json { render json: @advertisement, status: :created, location: @advertisement }
       else
         format.html { render action: "new" }
         format.json { render json: @advertisement.errors, status: :unprocessable_entity }
@@ -65,7 +66,7 @@ class Admin::AdvertisementsController < ApplicationController
 
     respond_to do |format|
       if @advertisement.update_attributes(params[:advertisement])
-        format.html { redirect_to @advertisement, notice: 'Advertisement was successfully updated.' }
+        format.html { redirect_to [:admin, @advertisement], notice: 'Advertisement was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
@@ -81,7 +82,7 @@ class Admin::AdvertisementsController < ApplicationController
     @advertisement.destroy
 
     respond_to do |format|
-      format.html { redirect_to advertisements_url }
+      format.html { redirect_to admin_advertisements_url }
       format.json { head :no_content }
     end
   end

@@ -1,0 +1,7 @@
+<div class="col-md-4">
+    <ul class="nav nav-pills nav-stacked admin-list">
+      <li class="<%= 'active' if params[:controller] == 'admin/users' %>"><%= link_to "Users", admin_users_path %></li>
+      <li class="<%= 'active' if params[:controller] == 'admin/advertisements' %>"><%= link_to "Advertisements", admin_advertisements_path %></li>
+      <li class="<%= 'active' if params[:controller] == 'admin/job_applications' %>"><%= link_to "Job Applications", "" %></li>
+    </ul>
+</div>

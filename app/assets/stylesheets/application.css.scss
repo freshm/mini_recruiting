@@ -13,10 +13,12 @@
  *= require formtastic-bootstrap
  */
 
-@import "bootstrap";
+body { padding-top: 60px; }
 
-table tr td a {
-    display:block;
-    height:100%;
-    width:100%;
+.btn a:visited {
+    color: #fff;
+}
+
+.admin-list {
+    margin-top: 35px;
 }
