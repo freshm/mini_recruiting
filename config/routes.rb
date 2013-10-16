@@ -19,6 +19,7 @@ MiniRecruiting::Application.routes.draw do
   namespace :admin do
     resources :users
     resources :advertisements
+    resources :job_applications
     root :to => 'users#index'
   end
 
