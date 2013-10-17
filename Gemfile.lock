@@ -32,8 +32,6 @@ GEM
     arel (3.0.2)
     atomic (1.1.14)
     bcrypt-ruby (3.1.2)
-    bootstrap-generators (3.0.0)
-      railties (>= 3.1)
     bootstrap-sass (2.3.2.2)
       sass (~> 3.2)
     builder (3.0.4)
@@ -192,7 +190,6 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  bootstrap-generators (~> 3.0)
   bootstrap-sass
   cancan
   capybara
@@ -205,6 +202,7 @@ DEPENDENCIES
   guard-rspec
   jquery-rails
   launchy
+  pry
   rails (= 3.2.12)
   rspec-rails
   sass-rails (~> 3.2.3)

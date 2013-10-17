@@ -54,4 +54,5 @@ end
 gem 'formtastic'
 gem 'formtastic-bootstrap'
 gem 'cells'
-gem 'bootstrap-generators', '~> 3.0'
+gem 'pry', group: :development
+gem 'cancan'
