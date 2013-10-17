@@ -1,8 +1,9 @@
 class Advertisement < ActiveRecord::Base
   belongs_to :admin
   has_many :job_applications, dependent: :destroy
-  has_many :applicants, through: :job_application
+  #has_many :applicants, through: :job_application
   attr_accessible :description, :location, :requirement, :title
+
 
   validates_presence_of :description, :location, :requirement, :title, :admin_id
   

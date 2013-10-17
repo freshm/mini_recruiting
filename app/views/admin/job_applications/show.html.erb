@@ -10,14 +10,14 @@
       <div class="panel-group" id="accordion">
         <% @job_applications.each_with_index do |job_application, index| %>
         <div class="panel panel-default">
-          <div class="panel-heading">
+          <div class="panel-heading text-center">
             <h4 class="panel-title">
-              <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
+              <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapse<%= index %>">
                 <%= job_application.applicant.fullname %>
               </a>
             </h4>
           </div>
-          <div id="collapseOne" class="panel-collapse collapse">
+          <div id="collapse<%= index %>" class="panel-collapse collapse">
             <div class="panel-body">
               <dl class="dl-horizontal">
                 <dt>Firstname:</dt>
@@ -41,9 +41,15 @@
         
         <% end %>
       <!--</dl>-->
-      </div>
+    
     <% else %>
       <h4>There are no applications</h4>
     <% end %>
-  </div>
+      <br />
+      <%= link_to :back, class: "text-center btn btn-lg btn-info back col-md-offset-1"  do %>
+        <span class="glyphicon glyphicon-info-sign"></span>
+        Back
+      <% end %>
+    </div>
+  
 </div>

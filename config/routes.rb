@@ -22,6 +22,8 @@ MiniRecruiting::Application.routes.draw do
     resources :job_applications
     root :to => 'users#index'
   end
+  get "/guest/apply_for/:advertisement_id/new", to: "guest_apply#new", as: "guest_new"
+  post "/guest/apply_for/:advertisement_id/", to: "guest_apply#create", as: "guest_create"
 
 
   # The priority is based upon order of creation:

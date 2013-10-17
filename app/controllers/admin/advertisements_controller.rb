@@ -1,4 +1,5 @@
 class Admin::AdvertisementsController < ApplicationController
+  before_filter :verify_admin
   # GET /admin/advertisements
   # GET /admin/advertisements.json
   def index

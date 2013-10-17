@@ -16,25 +16,17 @@
             <th>Location</th>
             <th>Description</th>
             <th>Requirement</th>
-            <% if admin_signed_in? %>
-            <th></th>
-            <th></th>
-            <th></th>
-            <% end %>
       </tr>
     </thead>
 
     <tbody>
       <%= content_tag_for(:tr, @advertisements) do |advertisement| %>
-            <td><%= advertisement.title %></td>
-            <td><%= advertisement.location %></td>
-            <td><%= advertisement.description %></td>
-            <td><%= advertisement.requirement %></td>
-        <% if admin_signed_in? %>
-            <td><%= link_to 'Show', advertisement %></td>
-          <td><%= link_to 'Edit', edit_advertisement_path(advertisement) %></td>
-          <td><%= link_to 'Destroy', advertisement, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-        <% end %>
+            <td><%= link_to advertisement.title, advertisement %></td>
+            <td><%= link_to advertisement.location, advertisement %></td>
+            <td><%= link_to advertisement.description, advertisement %></td>
+            <td><%= link_to advertisement.requirement, advertisement %></td>
+            <% if user_signed_in? && advertisement.already_taken_by_user?(current_user) %>
+            <% end %>
       <% end %>
     </tbody>
   </table>

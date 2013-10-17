@@ -1,6 +1,10 @@
 class Applicant < User
   has_many :job_applications, dependent: :destroy
-  has_many :advertisements, through: :job_application
+  #has_many :advertisements, through: :job_application
+  
+  attr_accessible :job_applications_attributes
+  
+  accepts_nested_attributes_for :job_applications
   
   
   def admin?

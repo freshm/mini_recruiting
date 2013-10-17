@@ -1,4 +1,5 @@
 class Admin::JobApplicationsController < ApplicationController
+  before_filter :verify_admin
   # GET /job_applications
   # GET /job_applications.json
   def index
@@ -25,7 +26,7 @@ class Admin::JobApplicationsController < ApplicationController
   # GET /job_applications/new
   # GET /job_applications/new.json
   def new
-    @advertisement = Advertisement.find_by_id(params[:advertisement_id]);
+    @advertisement = Advertisement.find_by_id(params[:advertisement_id])
     @job_application = JobApplication.new
 
     respond_to do |format|

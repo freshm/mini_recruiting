@@ -7,11 +7,11 @@ module ApplicationHelper
     end
   end
   
+  def beutified_date(date)
+    "#{date.year}-#{date.month}-#{date.day} #{date.hour}:#{date.min}"
+  end
+  
   def admin_signed_in?
-    if user_signed_in? && current_user.admin?
-      true
-    else
-      false
-    end
+    user_signed_in? && current_user.admin?
   end
 end

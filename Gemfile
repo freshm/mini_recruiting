@@ -54,3 +54,5 @@ end
 gem 'formtastic'
 gem 'formtastic-bootstrap'
 gem 'cells'
+gem 'pry', group: :development
+gem 'cancan'

@@ -19,9 +19,18 @@
   <dt>Requirement:</dt>
   <dd><%= @advertisement.requirement %></dd>
   
-  <% if user_signed_in? && !current_user.admin? %>
-    <% if !@advertisement.already_taken_by_user?(current_user) %>
-      <%= link_to "Apply now!", new_advertisement_job_application_path(@advertisement), class: "btn btn-primary pull-right" %>
+  <% if !admin_signed_in? %>
+    <% if user_signed_in? && !@advertisement.already_taken_by_user?(current_user) %>
+      <br/>
+      <div class="col-md-offset-1">
+        <%= link_to "Apply now!", new_advertisement_job_application_path(@advertisement), class: "btn btn-primary" %>
+        <%= link_to "Back", :back, class: "btn btn-warning" %>
+      </div>
+    <% elsif !user_signed_in? %>
+      <div class="col-md-offset-1">
+        <%= link_to "Apply now!", guest_new_path(@advertisement), class: "btn btn-primary" %>
+        <%= link_to "Back", :back, class: "btn btn-warning" %>
+      </div>
     <% else %>
       <br /><hr />
       <h2>You already applied for this Advertisement</h2>
@@ -33,6 +42,7 @@
         </blockquote>
       </p>
       <%= link_to "Want to change the details?",  edit_applicant_job_application_path(current_user.id, @advertisement.display_user_details(current_user)[2]), class: "btn btn-danger" %>
+      <%= link_to "Back", root_path, class: "btn btn-warning" %>
     <% end %>
   <% end %>
 

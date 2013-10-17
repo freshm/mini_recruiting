@@ -1,28 +1,32 @@
-<div class="page-header">
-  <%= link_to admin_advertisements_path, :class => 'btn btn-default' do %>
-    <span class="glyphicon glyphicon-list-alt"></span>
-    Back
-  <% end %>
-  <%= link_to edit_admin_advertisement_path(@advertisement), :class => 'btn btn-primary' do %>
-    <span class="glyphicon glyphicon-pencil"></span>
-    Edit
-  <% end %>
-  <h1><%= @advertisement.title %></h1>
+<div class="row">
+  <%= render "admin/sidebar" %>
+  <div class="col-md-10">
+    <div class="page-header">
+      <h1><%= @advertisement.title %></h1>
+    </div>
+    
+    <dl class="dl-horizontal">
+    
+      <dt>Location:</dt>
+      <dd><%= @advertisement.location %></dd>
+    
+      <dt>Description:</dt>
+      <dd><%= @advertisement.description %></dd>
+    
+      <dt>Requirement:</dt>
+      <dd><%= @advertisement.requirement %></dd>
+    </dl>
+    <div class="row col-md-offset-4">
+      <%= link_to admin_advertisement_path, :class => 'btn btn-default btn-lg' do %>
+          <span class="glyphicon glyphicon-info-sign"></span>
+          Back
+        <% end %>
+        <%= link_to edit_admin_advertisement_path(@advertisement), :class => 'btn btn-lg btn-info' do %>
+          <span class="glyphicon glyphicon-list-alt"></span>
+          Edit
+      <% end %>
+    </div>
+  </div>
 </div>
-
-<dl class="dl-horizontal">
-
-  <dt>Location:</dt>
-  <dd><%= @advertisement.location %></dd>
-
-  <dt>Description:</dt>
-  <dd><%= @advertisement.description %></dd>
-
-  <dt>Requirement:</dt>
-  <dd><%= @advertisement.requirement %></dd>
-  
-  <%= link_to "Apply now!", "#", class: "btn btn-primary pull-right" %>
-
-</dl>
 
 
