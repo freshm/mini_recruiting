@@ -19,7 +19,6 @@
                 <th>Location</th>
                 <th>Description</th>
                 <th>Requirement</th>
-                <th></th>
                 <th class="text-center">Destroy Advertisement</th>
           </tr>
         </thead>
@@ -27,11 +26,10 @@
         <tbody>
           <tr>
             <%= content_tag_for(:tr, @advertisements) do |advertisement| %>
-                  <td><%= link_to advertisement.title, edit_admin_advertisement_path(advertisement) %></td>
-                  <td><%= link_to advertisement.location, edit_admin_advertisement_path(advertisement) %></td>
-                  <td><%= link_to advertisement.description, edit_admin_advertisement_path(advertisement) %></td>
-                  <td><%= link_to advertisement.requirement, edit_admin_advertisement_path(advertisement) %></td>
-                  <td></td>
+                  <td><%= link_to advertisement.title, [:admin, advertisement] %></td>
+                  <td><%= link_to advertisement.location, [:admin, advertisement] %></td>
+                  <td><%= link_to advertisement.description, [:admin, advertisement] %></td>
+                  <td><%= link_to advertisement.requirement, [:admin, advertisement] %></td>
                   <td><%= link_to 'Destroy', [:admin, advertisement], class: "text-center",
                                                                       method: :delete,
                                                                       data: { confirm: 'Are you sure?' } %></td>

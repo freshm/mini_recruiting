@@ -14,9 +14,9 @@
   
   <%= f.inputs do %>
       <%= f.input :title %>
-      <%= f.input :description %>
       <%= f.input :location %>
       <%= f.input :requirement %>
+      <%= f.input :description, :input_html => { :class => 'autogrow', :rows => 12, :cols => 40 }%>
   <% end %>
   <br />
   <%= f.actions do %>
