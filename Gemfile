@@ -50,10 +50,10 @@ group :test do
   gem "launchy"
 end
 
-
+gem "font-awesome-rails"
 gem 'formtastic'
 gem 'formtastic-bootstrap'
 gem 'cells'
 gem 'pry', group: :development
 gem 'cancan'
-gem 'tinymce-rails'
+gem 'haml-rails'

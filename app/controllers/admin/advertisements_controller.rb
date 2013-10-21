@@ -51,7 +51,7 @@ class Admin::AdvertisementsController < ApplicationController
 
     respond_to do |format|
       if @advertisement.save
-        format.html { redirect_to @advertisement, notice: 'Advertisement was successfully created.' }
+        format.html { redirect_to [:admin, @advertisement], notice: 'Advertisement was successfully created.' }
         format.json { render json: @advertisement, status: :created, location: @advertisement }
       else
         format.html { render action: "new" }
@@ -83,7 +83,7 @@ class Admin::AdvertisementsController < ApplicationController
     @advertisement.destroy
 
     respond_to do |format|
-      format.html { redirect_to admin_advertisements_url }
+      format.html { redirect_to admin_advertisements_url, notice: "Advertisement was successfully deleted."  }
       format.json { head :no_content }
     end
   end

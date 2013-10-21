@@ -15,10 +15,10 @@
       <table class="table table-striped table-bordered table-hover">
         <thead>
           <tr>
-                <th>Title</th>
-                <th>Location</th>
-                <th>Description</th>
-                <th>Requirement</th>
+                <th class="text-center">Title</th>
+                <th class="text-center">Location</th>
+                <th class="text-center">Description</th>
+                <th class="text-center">Requirement</th>
                 <th class="text-center">Destroy Advertisement</th>
           </tr>
         </thead>
@@ -26,13 +26,17 @@
         <tbody>
           <tr>
             <%= content_tag_for(:tr, @advertisements) do |advertisement| %>
-                  <td><%= link_to advertisement.title, [:admin, advertisement] %></td>
-                  <td><%= link_to advertisement.location, [:admin, advertisement] %></td>
-                  <td><%= link_to advertisement.description, [:admin, advertisement] %></td>
-                  <td><%= link_to advertisement.requirement, [:admin, advertisement] %></td>
-                  <td><%= link_to 'Destroy', [:admin, advertisement], class: "text-center",
-                                                                      method: :delete,
-                                                                      data: { confirm: 'Are you sure?' } %></td>
+                  <td><%= advertisement.title %></td>
+                  <td><%= advertisement.location %></td>
+                  <td><%= advertisement.description %></td>
+                  <td><%= advertisement.requirement %></td>
+                  <td class="text-center inline">
+                    <%= link_to "", admin_advertisement_path(advertisement), class: "icon-eye-open"%>&nbsp;
+                    <%= link_to "", edit_admin_advertisement_path(advertisement), class: "icon-edit"%>&nbsp;
+                    <%= link_to "", [:admin, advertisement], class: "icon-trash",
+                                                             method: :delete,
+                                                             data: { confirm: 'Are you sure?' } %>
+                </td>
             <% end %>
           </tr>
         </tbody>

@@ -21,15 +21,17 @@ class GuestApplyController < ApplicationController
 
     respond_to do |format|
       if @applicant.save
-        @job_application = @applicant.job_applications.create(job.merge advertisement_id: @advertisement.id)
-        if @job_application.save
-          format.html { redirect_to root_path, notice: 'Welcome! You have signed up and applied successfully for this advertisement.' }
-          format.json { render json: @applicant, status: :created, location: @applicant }
-          sign_in(:user, @applicant)
+        unless @advertisement == nil
+          @job_application = @applicant.job_applications.create(job.merge advertisement_id: @advertisement.id)
+          if @job_application.save
+            format.html { redirect_to root_path, notice: 'Welcome! You have signed up and applied successfully for this advertisement.' }
+            format.json { render json: @applicant, status: :created, location: @applicant }
+            sign_in(:user, @applicant)
+          end
         else
-          format.html { redirect_to root_path, notice: 'Welcome! You have signed up but your application could not be proccessed.' }
-          format.json { render json: @applicant, status: :created, location: @applicant }
-          sign_in(:user, @applicant)
+            format.html { redirect_to root_path, notice: 'Welcome! You have signed up but your application could not be proccessed.' }
+            format.json { render json: @applicant, status: :created, location: @applicant }
+            sign_in(:user, @applicant)
         end
       else
         format.html { render action: "new" }

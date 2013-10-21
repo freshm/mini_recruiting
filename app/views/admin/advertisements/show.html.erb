@@ -10,23 +10,21 @@
       <dt>Location:</dt>
       <dd><%= @advertisement.location %></dd>
     
-      <dt>Description:</dt>
-      <dd><%= @advertisement.description %></dd>
-    
       <dt>Requirement:</dt>
       <dd><%= @advertisement.requirement %></dd>
+
+      <dt>Description:</dt>
+      <dd><%= @advertisement.description %></dd>
     </dl>
     <div class="row col-md-offset-4">
       <%= link_to admin_advertisement_path, :class => 'btn btn-default btn-lg' do %>
-          <span class="glyphicon glyphicon-info-sign"></span>
+          <span class="icon-arrow-left"></span>
           Back
         <% end %>
         <%= link_to edit_admin_advertisement_path(@advertisement), :class => 'btn btn-lg btn-info' do %>
-          <span class="glyphicon glyphicon-list-alt"></span>
+          <span class="icon-edit"></span>
           Edit
       <% end %>
     </div>
   </div>
 </div>
-
-

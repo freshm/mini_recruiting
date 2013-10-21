@@ -12,9 +12,14 @@
     </div>
   <% end %>
   
-  <%= f.inputs do %>
+  <%= f.inputs name: "Personal" do %>
       <%= f.input :firstname %>
       <%= f.input :lastname %>
+      <%= f.input :email %>
+  <% end %>
+
+  <%= f.inputs name: "Security" do %>
+      <%= f.input :password, label: "New Password" %>
   <% end %>
   
   <br /> 

@@ -5,7 +5,7 @@ describe Advertisement do
     advertisement = FactoryGirl.build(:advertisement)
   end
 
-  context "is created" do
+  context "after it was created" do
     before(:each) { @advertisement = FactoryGirl.build(:advertisement)}
 
     it "is valid " do
@@ -13,10 +13,11 @@ describe Advertisement do
     end
 
     it "is destroyed after the admin is destroyed" do
-      admin = FactoryGirl.create(:admin)
+      
+      admin = @advertisement.admin
       6.times { admin.advertisements.create(description: "w", location: "w", requirement: "w", title: "w") }
       admin.destroy
-      Advertisement.all.should == []
+      Advertisement.any?.should be_false
     end
 
     it "is invalid without an admin" do

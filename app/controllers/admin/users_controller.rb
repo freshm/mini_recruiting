@@ -58,15 +58,30 @@ class Admin::UsersController < ApplicationController
   # PUT /users/1.json
   def update
     @user = User.find(params[:id])
+    @user.firstname = params[:user][:firstname]
+    @user.lastname = params[:user][:lastname]
+    @user.email = params[:user][:email]
 
     respond_to do |format|
-      if @user.update_attributes(params[:user])
-        format.html { redirect_to [:admin, @user], notice: 'User was successfully updated.' }
-        format.json { head :no_content }
+      if params[:user][:password] == ""
+        if @user.save(validation: false)
+          format.html { redirect_to [:admin, @user], notice: 'User was successfully updated.' }
+          format.json { head :no_content }
+        else
+          format.html { render action: "edit" }
+          format.json { render json: @user.errors, status: :unprocessable_entity }
+        end
       else
-        format.html { render action: "edit" }
-        format.json { render json: @user.errors, status: :unprocessable_entity }
-      end
+        @user.password = params[:user][:password]
+        @user.password_confirmation = params[:user][:password]
+        if @user.save
+          format.html { redirect_to [:admin, @user], notice: 'User was successfully updated.' }
+          format.json { head :no_content }
+        else
+          format.html { render action: "edit" }
+          format.json { render json: @user.errors, status: :unprocessable_entity }
+        end
+      end          
     end
   end
 

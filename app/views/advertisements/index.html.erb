@@ -15,18 +15,26 @@
             <th>Title</th>
             <th>Location</th>
             <th>Description</th>
-            <th>Requirement</th>
+            <% if user_signed_in? %>
+            <th>Applied?</th>
+            <% end %>
+            <th>Actions</th>
       </tr>
     </thead>
 
     <tbody>
       <%= content_tag_for(:tr, @advertisements) do |advertisement| %>
-            <td><%= link_to advertisement.title, advertisement %></td>
-            <td><%= link_to advertisement.location, advertisement %></td>
-            <td><%= link_to advertisement.description, advertisement %></td>
-            <td><%= link_to advertisement.requirement, advertisement %></td>
+            <td><%= advertisement.title%></td>
+            <td><%= advertisement.location%></td>
+            <td><%= advertisement.requirement%></td>
             <% if user_signed_in? && advertisement.already_taken_by_user?(current_user) %>
+              <td class="text-center"><i class="icon-ok" style="color: green"></i></td>
+            <% elsif user_signed_in? && !advertisement.already_taken_by_user?(current_user) %>
+              <td class="text-center"><i class="icon-minus" style="color: red"></i></td>
             <% end %>
+            <td class="text-center inline">
+                <%= link_to "", advertisement, class: "icon-eye-open"%>&nbsp;
+            </td>
       <% end %>
     </tbody>
   </table>

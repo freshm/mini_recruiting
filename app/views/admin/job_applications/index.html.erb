@@ -16,13 +16,11 @@
         </thead>
     
         <tbody>
-          <tr>
-          <%= content_tag_for(:tr, @advertisements) do |advertisement| %>
+          <%= content_tag_for(:tr, @advertisements, class: "hover") do |advertisement| %>
                 <td><%= link_to advertisement.title, admin_job_application_path(advertisement) %></td>
                 <td class="text-center"><%= link_to advertisement.job_applications.count, admin_job_application_path(advertisement) %></td>
                 <td><%= link_to advertisement.created_at, admin_job_application_path(advertisement) %></td>
           <% end %>
-          </tr>
         </tbody>
       </table>
     </div>
