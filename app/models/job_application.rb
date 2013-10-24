@@ -1,11 +1,11 @@
 class JobApplication < ActiveRecord::Base
-  attr_accessible :advertisement_id, :applicant_id, :note, :wage
+  attr_accessible :vacancy_id, :applicant_id, :note, :salary
   
-  validates_presence_of :advertisement_id, :applicant_id
-  validates :applicant_id, :uniqueness => {:scope => :advertisement_id}
+  validates_presence_of :vacancy_id, :applicant_id
+  validates :applicant_id, :uniqueness => {:scope => :vacancy_id}
   
   #accepts_nested_attributes_for :applicant
   
   belongs_to :applicant
-  belongs_to :advertisement
+  belongs_to :vacancy
 end

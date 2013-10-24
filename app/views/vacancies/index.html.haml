@@ -1,0 +1,32 @@
+.page-header
+  - if user_signed_in? && current_user.admin?
+    = link_to new_admin_vacancy_path, class: "btn btn-primary pull-right" do
+      Add Vacancy
+  %h1 Current vacancies
+
+.table-responsive
+  %table.table.table-striped.table-bordered.table-hover
+    %thead
+      %tr
+        %th Title
+        %th Location
+        - if user_signed_in? && !current_user.admin?
+          %th Applied?
+        %th Actions
+    %tbody
+      = content_tag_for(:tr, @vacancies) do |vacancy|
+        %td= vacancy.title
+        %td= vacancy.location
+        - if user_signed_in? && !current_user.admin? && vacancy.already_taken_by_user?(current_user)
+          %td.text-center
+            %i.icon-check.applied
+        - elsif user_signed_in? && !current_user.admin? && !vacancy.already_taken_by_user?(current_user)
+          %td.text-center
+            %i.icon-check-empty.not-applied
+        %td.text-center.inline
+          = link_to "", vacancy_path(vacancy), class: "icon-eye-open eye", |
+                                               id: vacancy.title,          |
+                                               title: "Show",              |
+                                               data: { toggle: "tooltip",  |
+                                                       placement: "top"}   |
+                                                       

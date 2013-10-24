@@ -1,8 +1,8 @@
 class GuestApplyController < ApplicationController
   def new
-    @advertisement = Advertisement.find_by_id(params[:advertisement_id])
+    @vacancy = Vacancy.find_by_id(params[:vacancy_id])
     @applicant = Applicant.new
-    @applicant.job_applications.new(advertisement_id: @advertisement.id)
+    @applicant.job_applications.new(vacancy_id: @vacancy.id)
     
     respond_to do |format|
       format.html # show.html.erb
@@ -11,20 +11,20 @@ class GuestApplyController < ApplicationController
   end
   
   def create
-    @advertisement = Advertisement.find_by_id(params[:advertisement_id])
+    @vacancy = Vacancy.find_by_id(params[:vacancy_id])
     job = params[:user].delete("job_application")
     @applicant = Applicant.new(params[:user])
     
     
     #@applicant.job_application.create()
-    #@advertisement.job_applications.create(applicant_id: @applicant.id)
+    #@vacancy.job_applications.create(applicant_id: @applicant.id)
 
     respond_to do |format|
       if @applicant.save
-        unless @advertisement == nil
-          @job_application = @applicant.job_applications.create(job.merge advertisement_id: @advertisement.id)
+        unless @vacancy == nil
+          @job_application = @applicant.job_applications.create(job.merge vacancy_id: @vacancy.id)
           if @job_application.save
-            format.html { redirect_to root_path, notice: 'Welcome! You have signed up and applied successfully for this advertisement.' }
+            format.html { redirect_to root_path, notice: 'Welcome! You have signed up and applied successfully for this vacancy.' }
             format.json { render json: @applicant, status: :created, location: @applicant }
             sign_in(:user, @applicant)
           end

@@ -52,3 +52,15 @@ table tr td a:hover {
 .table-hover tbody tr:hover td, .table-hover tbody tr:hover th {
   background-color: #000;
 }
+
+.applied {
+    color: green;
+}
+
+.not-applied {
+    color: red;
+}
+
+a .big-font {
+    font-size: 32px;
+}

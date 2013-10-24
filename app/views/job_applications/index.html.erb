@@ -10,7 +10,7 @@
   <table class="table table-striped table-bordered table-hover">
     <thead>
       <tr>
-            <th>Wage</th>
+            <th>salary</th>
             <th>Note</th>
             <th>Applicant</th>
             <th>Advertisement</th>
@@ -22,7 +22,7 @@
 
     <tbody>
       <%= content_tag_for(:tr, @job_applications) do |job_application| %>
-            <td><%= job_application.wage %></td>
+            <td><%= job_application.salary %></td>
             <td><%= job_application.note %></td>
             <td><%= job_application.applicant_id %></td>
             <td><%= job_application.advertisement_id %></td>

@@ -2,11 +2,10 @@
   <%= render "admin/sidebar" %>
   <div class="col-md-10">
     <div class="page-header">
-      <h1>All Applications for <%= @advertisement.title %></h1>
+      <h1>All Applications for <%= @vacancy.title %></h1>
     </div>
     
     <% if @job_applications.any? %>
-      <!--<dl class="dl-horizontal">-->
       <div class="panel-group" id="accordion">
         <% @job_applications.each_with_index do |job_application, index| %>
         <div class="panel panel-default">
@@ -29,8 +28,8 @@
                 <dt>Applied at:</dt>
                 <dd><%= job_application.created_at %></dd>
                 
-                <dt>Offered wage:</dt>
-                <dd><%= job_application.wage %></dd>
+                <dt>Offered salary:</dt>
+                <dd><%= job_application.salary %></dd>
                 
                 <dt>Note by applicant:</dt>
                 <dd><%= job_application.note %></dd>
@@ -40,7 +39,6 @@
         </div>
         
         <% end %>
-      <!--</dl>-->
     
     <% else %>
       <h4>There are no applications</h4>

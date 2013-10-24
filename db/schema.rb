@@ -11,21 +11,11 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131017135529) do
+ActiveRecord::Schema.define(:version => 20131022100058) do
 
   create_table "admins", :force => true do |t|
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
-  end
-
-  create_table "advertisements", :force => true do |t|
-    t.string   "title"
-    t.string   "location"
-    t.text     "description", :limit => 255
-    t.string   "requirement"
-    t.datetime "created_at",                 :null => false
-    t.datetime "updated_at",                 :null => false
-    t.integer  "admin_id"
   end
 
   create_table "applicants", :force => true do |t|
@@ -34,12 +24,12 @@ ActiveRecord::Schema.define(:version => 20131017135529) do
   end
 
   create_table "job_applications", :force => true do |t|
-    t.float    "wage"
+    t.float    "salary"
     t.text     "note"
     t.integer  "applicant_id"
-    t.integer  "advertisement_id"
-    t.datetime "created_at",       :null => false
-    t.datetime "updated_at",       :null => false
+    t.integer  "vacancy_id"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
   end
 
   create_table "users", :force => true do |t|
@@ -62,5 +52,16 @@ ActiveRecord::Schema.define(:version => 20131017135529) do
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true
   add_index "users", ["reset_password_token"], :name => "index_users_on_reset_password_token", :unique => true
+
+  create_table "vacancies", :force => true do |t|
+    t.string   "title"
+    t.string   "location"
+    t.text     "description", :limit => 255
+    t.string   "requirement"
+    t.datetime "created_at",                 :null => false
+    t.datetime "updated_at",                 :null => false
+    t.integer  "admin_id"
+    t.string   "duties"
+  end
 
 end

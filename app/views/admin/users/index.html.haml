@@ -1,0 +1,52 @@
+.row
+  = render "admin/sidebar"
+  .col-md-10
+    .page-header
+      %h1 Listing Users
+    .table-responsive
+      %table.table.table-striped.table-bordered.table-hover
+        %thead
+          %tr
+            %th.text-center Firstname
+            %th.text-center Lastname
+            %th.text-center Email
+            %th.text-center Type
+            %th.text-center Actions
+        %tbody
+          = content_tag_for(:tr, @users) do |user|
+            %td= user.firstname
+            %td= user.lastname
+            %td= user.email
+            %td= user.type
+            %td.text-center
+              = link_to "", admin_user_path(user), class: "icon-eye-open eye",         |
+                                                   id: user.email,                     |
+                                                   title: "Show",                      |
+                                                   data: {toggle: "tooltip",           |
+                                                          placement: "top"}
+
+              = link_to "", edit_admin_user_path(user), class: "icon-edit edit",      |
+                                                        title: "Edit",                |
+                                                        data: { toggle: "tooltip",    |
+                                                                placement: "top"}
+              - unless user.admin?
+                - if user.type == "Applicant"
+                  = link_to "", admin_promote_to_moderator_path(user), class: "icon-level-up moderator",                      |
+                                                            title: "Promote to Moderator",  |
+                                                            data: { toggle: "tooltip",      |
+                                                                    placement: "top"}
+                - else
+
+                  = link_to "", admin_demote_to_applicant_path(user), class: "icon-level-down applicant",      |
+                                                            title: "Demote to Applicant",                |
+                                                            data: { toggle: "tooltip",    |
+                                                                    placement: "top"}
+
+
+              = link_to "", [:admin, user], class: "icon-trash delete",             |
+                                            id: "delete_#{user.email}",             |
+                                            title: "Delete",                        |
+                                            method: :delete,                        |
+                                            data: { confirm:   "Are you sure?",     |
+                                                    toggle:    "tooltip",           |
+                                                    placement: "top" }

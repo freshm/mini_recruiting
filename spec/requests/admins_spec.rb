@@ -2,10 +2,10 @@ require 'spec_helper'
 
 describe "Admins" do
   describe "" do
-    it "can login, and create an advertisement." do
+    it "can login, and create an vacancy." do
 	  	admin = FactoryGirl.create(:admin)
-	  	advertisement = FactoryGirl.create(:advertisement)
-	  	advertisement_count = Advertisement.all.count
+	  	vacancy = FactoryGirl.create(:vacancy)
+	  	vacancy_count = Vacancy.all.count
 	    visit "/users/sign_in"
 
 	    fill_in "Email",    :with => admin.email
@@ -17,43 +17,44 @@ describe "Admins" do
 	    
 	    assert_equal admin_root_url, current_url
 
-	    click_link "Advertisements"
+	    click_link "Vacancies"
 
-	    page.should have_content("Current advertisements")
+	    page.should have_content("Current vacancies")
 
-	    click_link "New Advertisement"
+	    click_link "Add"
 
 	    fill_in "Title", with: "Title"
 	    fill_in "Location", with: "Here"
 	    fill_in "Requirement", with: "Tests"
 	    fill_in "Description", with: "Lore ipsum text here"
+	    fill_in "Duties", with: "Do something"
 
-	    click_button "Create Advertisement"
+	    click_button "Create Vacancy"
 
-	    page.should have_content("Advertisement was successfully created.")
+	    page.should have_content("Vacancy was successfully created.")
 
-	    ad = Advertisement.last
+	    vacancy = Vacancy.last
 
-	    assert_equal current_url, advertisement_url(ad)
-	    assert_equal Advertisement.all.count, advertisement_count + 1
-	    page.should have_content(ad.title)
-	    page.should have_content(ad.description)
-	    page.should have_content(ad.location)
-	    page.should have_content(ad.requirement)
+	    assert_equal current_url, admin_vacancy_url(vacancy)
+	    assert_equal Vacancy.all.count, vacancy_count + 1
+	    page.should have_content(vacancy.title)
+	    page.should have_content(vacancy.description)
+	    page.should have_content(vacancy.location)
+	    page.should have_content(vacancy.requirement)
 
 	    click_link "Admin area"
-	    click_link "Advertisements"
+	    click_link "Vacancies"
 
-	    page.should have_content(ad.title)
-	    page.should have_content(ad.description)
-	    page.should have_content(ad.location)
-	    page.should have_content(ad.requirement)
+	    page.should have_content(vacancy.title)
+	    page.should have_content(vacancy.description)
+	    page.should have_content(vacancy.location)
+	    page.should have_content(vacancy.requirement)
     end
 
-    it "can login, and delete an advertisement." do
+    it "can login, and delete an vacancy." do
 	  	admin = FactoryGirl.create(:admin)
-	  	advertisement = FactoryGirl.create(:advertisement)
-	  	advertisement_count = Advertisement.all.count
+	  	vacancy = FactoryGirl.create(:vacancy)
+	  	vacancy_count = Vacancy.all.count
 	    visit "/users/sign_in"
 
 	    fill_in "Email",    :with => admin.email
@@ -65,24 +66,24 @@ describe "Admins" do
 	    
 	    assert_equal admin_root_url, current_url
 
-	    click_link "Advertisements"
+	    click_link "Vacancies"
 
-	    page.should have_content("Current advertisements")
-	    page.should have_content(advertisement.title)
-	    page.should have_content(advertisement.description)
-	    page.should have_content(advertisement.location)
-	    page.should have_content(advertisement.requirement)
+	    page.should have_content("Current vacancies")
+	    page.should have_content(vacancy.title)
+	    page.should have_content(vacancy.description)
+	    page.should have_content(vacancy.location)
+	    page.should have_content(vacancy.requirement)
 
-	    click_link "Destroy"
+	    click_link "delete_#{vacancy.title}"
 
-	    page.should have_content("Advertisement was successfully deleted.")
+	    page.should have_content("Vacancy was successfully deleted.")
 
-	    page.should_not have_content(advertisement.title)
-	    page.should_not have_content(advertisement.description)
-	    page.should_not have_content(advertisement.location)
-	    page.should_not have_content(advertisement.requirement)
+	    page.should_not have_content(vacancy.title)
+	    page.should_not have_content(vacancy.description)
+	    page.should_not have_content(vacancy.location)
+	    page.should_not have_content(vacancy.requirement)
 
-	    assert_equal Advertisement.all.count, advertisement_count - 1
+	    assert_equal Vacancy.all.count, vacancy_count - 1
     end
 
     it "can see the delete button for applicants, not for admins " do
@@ -103,8 +104,8 @@ describe "Admins" do
 	    page.should have_content(applicant.firstname)
 	    page.should have_content(applicant.lastname)
 	    page.should have_content(applicant.email)
-	    
-	    click_link "Delete"
+
+	    click_link "delete_#{applicant.email}"
 
 	    page.should_not have_content(applicant.firstname)
 	    page.should_not have_content(applicant.lastname)
@@ -129,13 +130,11 @@ describe "Admins" do
 	    
 	    assert_equal admin_root_url, current_url
 
-	    page.should have_content("Delete")
-
 	    page.should have_content(applicant.firstname)
 	    page.should have_content(applicant.lastname)
 	    page.should have_content(applicant.email)
 	    
-	    click_link "Delete"
+	    click_link "delete_#{applicant.email}"
 
 	    page.should_not have_content(applicant.firstname)
 	    page.should_not have_content(applicant.lastname)
@@ -176,7 +175,6 @@ describe "Admins" do
 
 	    fill_in "Firstname", with: "Whatever"
 	    fill_in "Lastname", with: "Nope"
-	    page.should_not have_content("Email")
 
 
 	    click_button "Update"
@@ -190,9 +188,9 @@ describe "Admins" do
 	    assert_equal "Nope", applicant.lastname
     end
 
-    it "can't see 'Apply now' for advertisements" do
+    it "can't see 'Apply now' for vacancies" do
     	admin = FactoryGirl.create(:admin)
-    	advertisement = FactoryGirl.create(:advertisement)
+    	vacancy = FactoryGirl.create(:vacancy)
 	    visit "/users/sign_in"
 
 	    fill_in "Email",    :with => admin.email
@@ -206,12 +204,10 @@ describe "Admins" do
 
 	    visit root_url
 
-	    page.should have_content(advertisement.title)
-	    page.should have_content(advertisement.location)
-	    page.should have_content(advertisement.description)
-	    page.should have_content(advertisement.requirement)
+	    page.should have_content(vacancy.title)
+	    page.should have_content(vacancy.location)
 
-	    click_link advertisement.title
+	    click_link vacancy.title
 
    	    page.should_not have_content("Apply now")
     end

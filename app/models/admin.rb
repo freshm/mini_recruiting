@@ -1,5 +1,5 @@
 class Admin < User
-  has_many :advertisements, dependent: :destroy
+  has_many :vacancies, dependent: :destroy
   def admin?
     true
   end

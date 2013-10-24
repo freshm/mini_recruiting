@@ -1,0 +1,26 @@
+div.row
+  = render "admin/sidebar"
+  div.col-md-10
+    div.page-header
+      h1= @vacancy.title
+
+    dl
+      dt Location:
+      dd= @vacancy.location
+
+      dt Description:
+      dd= @vacancy.description
+
+      dt Duties:
+      dd= @vacancy.duties
+
+      dt Requirement:
+      dd= @vacancy.requirement
+
+    div.row.col-md-offset-4
+      = link_to admin_vacancies_path, class: "btn btn-default btn-lg" do
+        span.icon-arrow-left
+        | Back
+      = link_to edit_admin_vacancy_path(@vacancy), class: "btn btn-lg btn-info" do
+        span.icon-edit
+        | Edit

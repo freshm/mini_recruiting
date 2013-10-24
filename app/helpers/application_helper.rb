@@ -7,9 +7,17 @@ module ApplicationHelper
     end
   end
   
-  def beutified_date(date)
-    "#{date.year}-#{date.month}-#{date.day} #{date.hour}:#{date.min}"
-  end
+  def i18n_date(date)
+     if request.env['HTTP_ACCEPT_LANGUAGE'].scan(/^[a-z]{2}/).first == "de" || "no" || "se"
+         date.strftime("%d.%m.%Y %H:%M")
+     elsif request.env['HTTP_ACCEPT_LANGUAGE'].scan(/^[a-z]{2}/).first == "en"
+        date.strftime("%m/%d/%Y %-I:%m %p")
+     elsif request.env['HTTP_ACCEPT_LANGUAGE'].scan(/^[a-z]{2}/).first == "fr"
+        date.strftime("%d-%m-%Y %-I:%m %p")
+     else
+        date.strftime("%Y-%m-%d %H:%m")
+     end
+   end
   
   def admin_signed_in?
     user_signed_in? && current_user.admin?

@@ -9,7 +9,7 @@ class Ability
          can :manage, :all
        else
          can [:read, :edit, :update], User, id: user.id
-         can :read, Advertisement
+         can :read, Vacancy
          can :crud, JobApplication
        end
     #

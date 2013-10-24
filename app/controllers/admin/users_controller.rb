@@ -96,4 +96,18 @@ class Admin::UsersController < ApplicationController
       format.json { head :no_content }
     end
   end
+
+  def promote_to_moderator
+    @user = User.find(params[:id])
+    @user.type = "Moderator"
+    @user.save!
+    redirect_to admin_root_path, notice: "#{@user.fullname} was granted Moderator privileges."
+  end
+
+  def demote_to_applicant
+    @user = User.find(params[:id])
+    @user.type = "Applicant"
+    @user.save!
+    redirect_to admin_root_path, notice: "#{@user.fullname} Moderator privileges were withdrawn."
+  end
 end

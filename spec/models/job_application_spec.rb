@@ -17,13 +17,13 @@ describe JobApplication do
       @jAp.should_not be_valid
     end
     
-    it "should be invalid without an advertisement" do
-      @jAp.advertisement = nil
+    it "should be invalid without an vacancy" do
+      @jAp.vacancy = nil
       @jAp.should_not be_valid
     end
     
-    it "should be valid without a wage" do
-      @jAp.wage = nil
+    it "should be valid without a salary" do
+      @jAp.salary = nil
       @jAp.should be_valid
     end
     
@@ -39,9 +39,9 @@ describe JobApplication do
     end
     
     it "should be destroy after the applicant is destroyed" do
-      adv = @jAp.advertisement
+      adv = @jAp.vacancy
       adv.destroy
-      Advertisement.find_by_id(@jAp.id).should be_nil
+      Vacancy.find_by_id(@jAp.id).should be_nil
     end
   end
 end

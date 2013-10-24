@@ -1,7 +1,7 @@
 MiniRecruiting::Application.routes.draw do
-  root :to => 'advertisements#index'
+  root :to => 'vacancies#index'
   
-  resources :advertisements, only: :show do
+  resources :vacancies, only: :show do
     resources :job_applications, only: [:new, :create]
   end
   
@@ -18,12 +18,14 @@ MiniRecruiting::Application.routes.draw do
   
   namespace :admin do
     resources :users
-    resources :advertisements
+    get "users/promote_to_moderator/:id" , to: "users#promote_to_moderator", as: "promote_to_moderator"
+    get "users/demote_to_applicant/:id" , to: "users#demote_to_applicant", as: "demote_to_applicant"
+    resources :vacancies
     resources :job_applications
     root :to => 'users#index'
   end
-  get "/guest/apply_for/:advertisement_id/new", to: "guest_apply#new", as: "guest_new"
-  post "/guest/apply_for/:advertisement_id/", to: "guest_apply#create", as: "guest_create"
+  get "/guest/apply_for/:vacancy_id/new", to: "guest_apply#new", as: "guest_new"
+  post "/guest/apply_for/:vacancy_id/", to: "guest_apply#create", as: "guest_create"
 
 
   # The priority is based upon order of creation:

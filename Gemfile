@@ -57,3 +57,5 @@ gem 'cells'
 gem 'pry', group: :development
 gem 'cancan'
 gem 'haml-rails'
+gem 'slim-rails'
+gem 'state-machine'

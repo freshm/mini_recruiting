@@ -1,9 +1,9 @@
 require 'spec_helper'
 
 describe "Applicants" do
-  it "can login, click on an advertisement and apply for it." do
+  it "can login, click on an vacancy and apply for it." do
   	applicant = FactoryGirl.create(:applicant)
-  	advertisement = FactoryGirl.create(:advertisement)
+  	vacancy = FactoryGirl.create(:vacancy)
     visit "/users/sign_in"
 
     fill_in "Email",    :with => applicant.email
@@ -15,21 +15,21 @@ describe "Applicants" do
     
     assert_equal root_url, current_url
 
-    click_link advertisement.title
+    click_link vacancy.title
 
     click_link "Apply now!"
 
-    fill_in "Wage", with: 12.0
+    fill_in "Salary", with: 12.0
     fill_in "Note", with: "Lore ipsum text"
 
     click_button "Create Job application"
 
     page.should have_content "Job application was successfully created."
 
-    assert_equal current_path, advertisement_path(advertisement)
-    assert_equal applicant.job_applications.last.wage, JobApplication.last.wage
+    assert_equal current_path, vacancy_path(vacancy)
+    assert_equal applicant.job_applications.last.salary, JobApplication.last.salary
     assert_equal applicant.job_applications.last.note, JobApplication.last.note
-    assert_equal Advertisement.last.job_applications.last, JobApplication.last
+    assert_equal Vacancy.last.job_applications.last, JobApplication.last
     assert_equal applicant.job_applications.last, JobApplication.last
   end
 

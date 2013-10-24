@@ -14,3 +14,11 @@
 //= require jquery_ujs
 //= require bootstrap
 //= require_tree .
+
+$( document ).ready ( function() {
+	$(".eye").tooltip();
+	$(".edit").tooltip();
+	$(".delete").tooltip();
+	$(".applicant").tooltip();
+	$(".moderator").tooltip();
+});

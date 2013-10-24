@@ -17,20 +17,21 @@ FactoryGirl.define do
       f.password_confirmation "testpass"
    end
 
-   factory :advertisement do |g|
+   factory :vacancy do |g|
       admin
       g.title "Something"
       g.description "Somesometing"
       g.requirement "Woot"
       g.location "Nowhere"
+      g.duties "Go nowhere"
 
          #:description, :location, :requirement, :title, :admin_id
    end
    
    factory :job_application do |f|
       applicant
-      advertisement
-      f.wage 12.0
+      vacancy
+      f.salary 12.0
       f.note "I'm a dummy note"
    end
 end

@@ -3,7 +3,7 @@
   <table class="table">
     <% @applications.each do |application| %>
       <tr>
-        <td><%= link_to application.advertisement.title, advertisement_path(application.advertisement) %></td>
+        <td><%= link_to application.vacancy.title, vacancy_path(application.vacancy) %></td>
       </tr>
     <% end %>
   </table>
