@@ -22,4 +22,12 @@ module ApplicationHelper
   def admin_signed_in?
     user_signed_in? && current_user.admin?
   end
+
+  def access_to_admin_area?
+    user_signed_in? && current_user.admin? || current_user.type == "Moderator"
+  end
+
+  def moderator_signed_in?
+    user_signed_in? && current_user.type = "Moderator"
+  end
 end

@@ -1,4 +1,5 @@
 class GuestApplyController < ApplicationController
+  before_filter :not_a_user
   def new
     @vacancy = Vacancy.find_by_id(params[:vacancy_id])
     @applicant = Applicant.new
@@ -38,5 +39,11 @@ class GuestApplyController < ApplicationController
         format.json { render json: @applicant.errors, status: :unprocessable_entity }
       end
     end
+  end
+
+  private
+
+  def not_a_user
+    redirect_to root_path, notice: "You are already signed in." if user_signed_in?
   end
 end

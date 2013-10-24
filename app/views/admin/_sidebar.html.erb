@@ -1,7 +1,15 @@
-<div class="col-md-2">
-    <ul class="nav nav-pills nav-stacked admin-list">
-      <li class="<%= 'active' if params[:controller] == 'admin/users' %>"><%= link_to "Users", admin_users_path %></li>
-      <li class="<%= 'active' if params[:controller] == 'admin/vacancies' %>"><%= link_to "Vacancies", admin_vacancies_path %></li>
-      <li class="<%= 'active' if params[:controller] == 'admin/job_applications' %>"><%= link_to "Job Applications", admin_job_applications_path %></li>
-    </ul>
-</div>
+<% if admin_signed_in? %>
+	<div class="col-md-2">
+	    <ul class="nav nav-pills nav-stacked admin-list">
+	      <li class="<%= 'active' if params[:controller] == 'admin/users' %>"><%= link_to "Users", admin_users_path %></li>
+	      <li class="<%= 'active' if params[:controller] == 'admin/vacancies' %>"><%= link_to "Vacancies", admin_vacancies_path %></li>
+	      <li class="<%= 'active' if params[:controller] == 'admin/job_applications' %>"><%= link_to "Job Applications", admin_job_applications_path %></li>
+	    </ul>
+	</div>
+<% elsif moderator_signed_in? %>
+	<div class="col-md-2">
+	    <ul class="nav nav-pills nav-stacked admin-list">
+	      <li class="<%= 'active' if params[:controller] == 'admin/job_applications' %>"><%= link_to "Job Applications", admin_job_applications_path %></li>
+	    </ul>
+	</div>
+<% end %>

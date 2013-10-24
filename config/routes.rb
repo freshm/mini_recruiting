@@ -27,6 +27,8 @@ MiniRecruiting::Application.routes.draw do
   get "/guest/apply_for/:vacancy_id/new", to: "guest_apply#new", as: "guest_new"
   post "/guest/apply_for/:vacancy_id/", to: "guest_apply#create", as: "guest_create"
 
+  get "admin/job_applications/:id/rate_as_good" , to: "admin/job_applications#rate_as_good", as: "rate_application_good"
+  get "admin/job_applications/:id/rate_as_bad" , to: "admin/job_applications#rate_as_bad", as: "rate_application_bad"
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

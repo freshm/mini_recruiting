@@ -1,0 +1,26 @@
+<div class="row">
+  <%= render "admin/sidebar" %>
+  <div class="col-md-10">
+    <div class="page-header">
+      <h1>All Applications for <%= @vacancy.title %></h1>
+    </div>
+    <div id="tabs">
+      <ul>
+        <li><a href="#tabs-2">Applications to review</a></li>
+      </ul>
+      <div id="tabs-2">
+        <% if @forwarded.any? %>
+        <%= render :partial => "accordion_content", :locals => { :tab => @forwarded } %>
+        <% else %>
+        <h4>There are currently no applications to review.</h4>
+        <% end %>
+      </div>
+    </div>
+
+    <br />
+    <%= link_to :back, class: "text-center btn btn-lg btn-info back col-md-offset-1"  do %>
+    <span class="icon-arrow-left"></span>
+    Back
+    <% end %>
+  </div>
+</div>

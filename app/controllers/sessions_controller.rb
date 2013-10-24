@@ -9,6 +9,9 @@ class SessionsController < Devise::SessionsController
     sign_in(resource_name, resource)
     if resource.type == "Admin"
       respond_with resource, :location => admin_root_path
+    elsif resource.type == "Moderator"
+      respond_with resource, :location => admin_job_applications_path
+      
     else
       respond_with resource, :location => after_sign_in_path_for(resource)
     end

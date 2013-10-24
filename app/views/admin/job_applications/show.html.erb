@@ -1,53 +1,5 @@
-<div class="row">
-  <%= render "admin/sidebar" %>
-  <div class="col-md-10">
-    <div class="page-header">
-      <h1>All Applications for <%= @vacancy.title %></h1>
-    </div>
-    
-    <% if @job_applications.any? %>
-      <div class="panel-group" id="accordion">
-        <% @job_applications.each_with_index do |job_application, index| %>
-        <div class="panel panel-default">
-          <div class="panel-heading text-center">
-            <h4 class="panel-title">
-              <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapse<%= index %>">
-                <%= job_application.applicant.fullname %>
-              </a>
-            </h4>
-          </div>
-          <div id="collapse<%= index %>" class="panel-collapse collapse">
-            <div class="panel-body">
-              <dl class="dl-horizontal">
-                <dt>Firstname:</dt>
-                <dd><%= job_application.applicant.firstname %></dd>
-              
-                <dt>Lastname:</dt>
-                <dd><%= job_application.applicant.lastname %></dd>
-              
-                <dt>Applied at:</dt>
-                <dd><%= job_application.created_at %></dd>
-                
-                <dt>Offered salary:</dt>
-                <dd><%= job_application.salary %></dd>
-                
-                <dt>Note by applicant:</dt>
-                <dd><%= job_application.note %></dd>
-              </dl>
-            </div>
-          </div>
-        </div>
-        
-        <% end %>
-    
-    <% else %>
-      <h4>There are no applications</h4>
-    <% end %>
-      <br />
-      <%= link_to :back, class: "text-center btn btn-lg btn-info back col-md-offset-1"  do %>
-        <span class="icon-arrow-left"></span>
-        Back
-      <% end %>
-    </div>
-  
-</div>
+<% if admin_signed_in? %>
+  <%= render "admin/job_applications/admin_show" %>
+<% elsif moderator_signed_in? %>
+  <%= render "admin/job_applications/moderator_show" %>
+<% end %>

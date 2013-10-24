@@ -13,6 +13,7 @@
 //= require jquery
 //= require jquery_ujs
 //= require bootstrap
+//= require jquery.ui.tabs
 //= require_tree .
 
 $( document ).ready ( function() {
@@ -21,4 +22,6 @@ $( document ).ready ( function() {
 	$(".delete").tooltip();
 	$(".applicant").tooltip();
 	$(".moderator").tooltip();
+
+	$( "#tabs" ).tabs();
 });

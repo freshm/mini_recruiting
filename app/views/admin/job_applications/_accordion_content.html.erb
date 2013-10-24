@@ -1,0 +1,45 @@
+<div class="panel-group" id="accordion">
+  <% tab.each_with_index do |job_application, index| %>
+  <div class="panel panel-default">
+    <div class="panel-heading text-center">
+      <h4 class="panel-title">
+        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapse<%= "#{job_application.state}#{index}" %>">
+          <%= job_application.applicant.fullname %>
+        </a>
+      </h4>
+    </div>
+    <div id="collapse<%= "#{job_application.state}#{index}" %>" class="panel-collapse collapse">
+      <div class="panel-body">
+        <dl class="dl-horizontal">
+          <dt>Firstname:</dt>
+          <dd><%= job_application.applicant.firstname %></dd>
+
+          <dt>Lastname:</dt>
+          <dd><%= job_application.applicant.lastname %></dd>
+
+          <dt>Applied at:</dt>
+          <dd><%= job_application.created_at %></dd>
+
+          <dt>Offered salary:</dt>
+          <dd><%= job_application.salary %></dd>
+
+          <dt>Note by applicant:</dt>
+          <dd><%= job_application.note %></dd>
+
+          <% if moderator_signed_in? %>
+            <div class="pull-right">
+              <%= link_to rate_application_good_path(job_application) do %>
+              <span class="icon-thumbs-up"></span>
+              <% end %>
+              <%= link_to "#" do %>
+              <span class="icon-thumbs-down"></span>
+              <% end %>
+            </div>
+          <% end %>
+        </dl>
+      </div>
+    </div>
+  </div>
+
+  <% end %>
+</div>

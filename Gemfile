@@ -21,6 +21,7 @@ group :assets do
 end
 
 gem 'jquery-rails'
+gem 'jquery-ui-rails'
 
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
@@ -58,4 +59,5 @@ gem 'pry', group: :development
 gem 'cancan'
 gem 'haml-rails'
 gem 'slim-rails'
-gem 'state-machine'
+gem 'state_machine'
+gem 'pdfkit'

@@ -1,5 +1,6 @@
 class Admin::JobApplicationsController < ApplicationController
-  before_filter :verify_admin
+  before_filter :verify_admin, except: [:index, :show, :rate_as_good]
+  before_filter :verify_mod_privilges
   # GET /job_applications
   # GET /job_applications.json
   def index
@@ -16,6 +17,11 @@ class Admin::JobApplicationsController < ApplicationController
   def show
     @vacancy = Vacancy.find(params[:id])
     @job_applications = JobApplication.where(vacancy_id: @vacancy.id)
+    @new = JobApplication.where(state: "send", vacancy_id: @vacancy.id)
+    @forwarded = JobApplication.where(state: "manager_review", vacancy_id: @vacancy.id).includes(:applicant)
+    @reviewed = JobApplication.where(state: "manager_review_listed", vacancy_id: @vacancy.id).includes(:applicant)
+    @employed = JobApplication.where(state: "employed", vacancy_id: @vacancy.id).includes(:applicant)
+    @rejected = JobApplication.where(state: "rejected", vacancy_id: @vacancy.id).includes(:applicant)
 
     respond_to do |format|
       format.html # show.html.erb
@@ -88,5 +94,21 @@ class Admin::JobApplicationsController < ApplicationController
       format.html { redirect_to job_applications_url }
       format.json { head :no_content }
     end
+  end
+
+  def rate_as_good
+    @job_application = JobApplication.find(params[:id])
+    vacancy = @job_application.vacancy
+    @job_application.mark_as_good
+
+    redirect_to admin_job_application_path(vacancy.id), notice: "Reviewed the application from #{@job_application.applicant.fullname} for #{@job_application.vacancy.title}"
+  end
+
+  def rate_as_bad
+    @job_application = JobApplication.find(params[:id])
+    vacancy = @job_application.vacancy
+    @job_application.mark_as_bad
+
+    redirect_to admin_job_application_path(vacancy.id), notice: "Reviewed the application from #{@job_application.applicant.fullname} for #{@job_application.vacancy.title}"
   end
 end

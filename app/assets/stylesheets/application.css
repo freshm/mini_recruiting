@@ -1,0 +1,90 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
+ * or vendor/assets/stylesheets of plugins, if any, can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the top of the
+ * compiled file, but it's generally better to create a new file per style scope.
+ *
+ *= require_self
+ *= require_tree .
+ *= require formtastic-bootstrap
+ *= require jquery.ui.all
+ *= require font-awesome
+ */
+
+body { padding-top: 60px; }
+
+.btn a:visited {
+    color: #fff;
+}
+
+.admin-list {
+    margin-top: 35px;
+}
+
+table tr td a {
+    display:block;
+    height:100%;
+    width:100%;
+}
+
+table tr td a:hover {
+    text-decoration: none;
+}
+
+.back {
+    width: 75%;
+}
+
+.gray-bg {
+    background-color: #eee;
+    border-radius: 10px;
+}
+
+.panel-group div div h4 a {
+    display: block;
+    height: 100%;
+    width: 100%;
+}
+
+.table-hover tbody tr:hover td, .table-hover tbody tr:hover th {
+  background-color: #000;
+}
+
+.applied {
+    color: green;
+}
+
+.not-applied {
+    color: red;
+}
+
+a .big-font {
+    font-size: 32px;
+}
+
+/* styles for printing */
+@media print {
+    /* hide blocks that should not appear in print/pdf */
+    .navbar, .navbar-fixed-top, .navbar-inverse, .btn, .btn-primary, .icon-edit {
+      display: none;
+  }
+
+  /* make the content block the entire width since the menu is not visible */
+  .container
+  {
+      top: 0;
+      margin: 0;
+      padding: 10px;
+      width: 100%;
+      margin-left: 40px;
+  }
+
+  p {
+    padding: 0;
+    margin: 0;
+  }
+}

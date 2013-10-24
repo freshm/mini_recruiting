@@ -1,0 +1,61 @@
+<div class="row">
+  <%= render "admin/sidebar" %>
+  <div class="col-md-10">
+    <div class="page-header">
+      <h1>All Applications for <%= @vacancy.title %></h1>
+    </div>
+    <div id="tabs">
+      <ul>
+        <li><a href="#tabs-1">Newly send</a></li>
+        <li><a href="#tabs-2">Forwarded to manager</a></li>
+        <li><a href="#tabs-3">Review by manager</a></li>
+        <li><a href="#tabs-4">Employed</a></li>
+        <li><a href="#tabs-5">Rejected</a></li>
+      </ul>
+      <div id="tabs-1">
+        <% if @new.any? %>
+        <%= render :partial => "accordion_content", :locals => { :tab => @new } %>
+        <% else %>
+        <h4>There are no new applications.</h4>
+        <% end %>
+      </div>
+      <div id="tabs-2">
+        <% if @forwarded.any? %>
+        <%= render :partial => "accordion_content", :locals => { :tab => @forwarded } %>
+        <% else %>
+        <h4>There are currently no applications reviewed by a manager.</h4>
+        <% end %>
+      </div>
+
+      <div id="tabs-3">
+        <% if @reviewed.any? %>
+        <%= render :partial => "accordion_content", :locals => { :tab => @reviewed } %>
+        <% else %>
+        <h4>There are no reviewed applications.</h4>
+        <% end %>
+      </div>
+
+      <div id="tabs-4">
+        <% if @employed.any? %>
+        <%= render :partial => "accordion_content", :locals => { :tab => @employed } %>
+        <% else %>
+        <h4>There was no one employed, yet.</h4>
+        <% end %>
+      </div>
+
+      <div id="tabs-5">
+        <% if @rejected.any? %>
+        <%= render :partial => "accordion_content", :locals => { :tab => @rejected } %>
+        <% else %>
+        <h4>There are no rejected applications.</h4>
+        <% end %>
+      </div>
+    </div>
+
+    <br />
+    <%= link_to :back, class: "text-center btn btn-lg btn-info back col-md-offset-1"  do %>
+    <span class="icon-arrow-left"></span>
+    Back
+    <% end %>
+  </div>
+</div>
