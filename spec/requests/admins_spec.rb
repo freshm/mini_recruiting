@@ -227,5 +227,133 @@ describe "Admins" do
 
 	    page.should have_content("Signed out successfully.")
 	end
+
+	it "can login, and promote an applicant to a moderator." do
+	  	admin = FactoryGirl.create(:admin)
+	  	applicant = FactoryGirl.create(:applicant)
+	  	assert_equal applicant.type,  "Applicant"
+	    visit "/users/sign_in"
+
+	    fill_in "Email",    :with => admin.email
+	    fill_in "Password", :with => "testpass"
+
+	    click_button "Sign in"
+
+	    page.should have_content("Signed in successfully.")
+	    page.should have_content("Applicant")
+	    page.should_not have_content("Moderator")
+	    
+	    assert_equal admin_root_url, current_url
+
+	    click_link "promote_#{applicant.email}"
+
+	    page.should have_content("#{applicant.fullname} was granted Moderator privileges.")
+	    find("table").should_not have_content("Applicant")
+	    page.should have_content("Moderator")
+	end
+
+	it "can login, and demote a moderator to an applicant." do
+	  	admin = FactoryGirl.create(:admin)
+	  	moderator = FactoryGirl.create(:moderator)
+	  	assert_equal moderator.type,  "Moderator"
+	    visit "/users/sign_in"
+
+	    fill_in "Email",    :with => admin.email
+	    fill_in "Password", :with => "testpass"
+
+	    click_button "Sign in"
+
+	    page.should have_content("Signed in successfully.")
+	    page.should_not have_content("Applicant")
+	    page.should have_content("Moderator")
+	    
+	    assert_equal admin_root_url, current_url
+
+	    click_link "demote_#{moderator.email}"
+
+	    page.should have_content("#{moderator.fullname} Moderator privileges were withdrawn.")
+	    find("table").should have_content("Applicant")
+	end
+
+	it "can forward an new application" do
+		Capybara.current_session.driver.header('Accept-Language', 'de')
+	  	admin = FactoryGirl.create(:admin)
+	  	moderator = FactoryGirl.create(:moderator)
+	  	job_application = FactoryGirl.create(:job_application)
+	    visit "/users/sign_in"
+
+	    fill_in "Email",    :with => admin.email
+	    fill_in "Password", :with => "testpass"
+
+	    click_button "Sign in"
+
+	    page.should have_content("Signed in successfully.")
+
+	    click_link "Job Applications"
+
+	    click_link job_application.vacancy.title
+
+	    click_link "Forward"
+
+	    click_button "Forward to manager"
+
+	    page.should have_content("Assigned #{moderator.fullname}")
+	    job_application.reload
+	    assert_equal job_application.state, "manager_review"
+	end
+
+	it "can reject new and reviewed applications" do
+		Capybara.current_session.driver.header('Accept-Language', 'de')
+	  	admin = FactoryGirl.create(:admin)
+	  	vacancy = FactoryGirl.create(:vacancy)
+	  	job_application1 = FactoryGirl.create(:job_application, vacancy_id: vacancy.id)
+	  	job_application2 = FactoryGirl.create(:job_application, vacancy_id: vacancy.id)
+	  	job_application2.state = "manager_review_listed"
+	  	job_application2.save
+	    visit "/users/sign_in"
+
+	    fill_in "Email",    :with => admin.email
+	    fill_in "Password", :with => "testpass"
+
+	    click_button "Sign in"
+
+	    page.should have_content("Signed in successfully.")
+
+	    click_link "Job Applications"
+
+	    click_link vacancy.title
+
+	    click_link "reject_#{job_application1.id}"
+
+	    page.should have_content("Rejected the application from #{job_application1.user.fullname} for #{job_application1.vacancy.title}")
+
+	    
+	    click_link "reject_#{job_application2.id}"
+	    page.should have_content("Rejected the application from #{job_application2.user.fullname} for #{job_application2.vacancy.title}")
+	end
+
+	it "can employ a reviewed applications" do
+		Capybara.current_session.driver.header('Accept-Language', 'de')
+	  	admin = FactoryGirl.create(:admin)
+	  	vacancy = FactoryGirl.create(:vacancy)
+	  	job_application = FactoryGirl.create(:job_application, vacancy_id: vacancy.id)
+	  	job_application.state = "manager_review_listed"
+	  	job_application.save
+	    visit "/users/sign_in"
+
+	    fill_in "Email",    :with => admin.email
+	    fill_in "Password", :with => "testpass"
+
+	    click_button "Sign in"
+
+	    page.should have_content("Signed in successfully.")
+
+	    click_link "Job Applications"
+
+	    click_link vacancy.title
+	    
+	    click_link "employ_#{job_application.id}"
+	    page.should have_content("Employed #{job_application.user.fullname} for #{job_application.vacancy.title}")
+	end
   end
 end

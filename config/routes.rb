@@ -13,7 +13,8 @@ MiniRecruiting::Application.routes.draw do
   devise_for :users, controllers: {sessions: "sessions"}
   devise_for :applicants, :controllers => {:registrations => "applicant_registrations"}
   devise_for :admin
-  
+
+  resources :job_assignments, only: [:new, :create]
   resources :users
   
   namespace :admin do
@@ -26,9 +27,13 @@ MiniRecruiting::Application.routes.draw do
   end
   get "/guest/apply_for/:vacancy_id/new", to: "guest_apply#new", as: "guest_new"
   post "/guest/apply_for/:vacancy_id/", to: "guest_apply#create", as: "guest_create"
+  get "vacancy/:id/pdf" , to: "vacancies#new_pdf", as: "vacancy_pdf"
 
   get "admin/job_applications/:id/rate_as_good" , to: "admin/job_applications#rate_as_good", as: "rate_application_good"
   get "admin/job_applications/:id/rate_as_bad" , to: "admin/job_applications#rate_as_bad", as: "rate_application_bad"
+  get "admin/job_applications/:id/reject" , to: "admin/job_applications#reject", as: "reject_application"
+  get "admin/job_applications/:id/select_moderator" , to: "admin/job_applications#select_moderator", as: "select_moderator"
+  get "admin/job_applications/:id/employ" , to: "admin/job_applications#employ", as: "employ"
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

@@ -5,9 +5,7 @@
     %title Mini Recruiting
     %meta{name: "viewport", content: "width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"}
     %meta{name: "author", content: ""}
-      = javascript_include_tag "bootstrap-ie"
     = stylesheet_link_tag     "application", media: "all", "data-turbolinks-track" => true
-    = csrf_meta_tags
 
     %body
       .navbar.navbar-fixed-top.navbar-inverse
@@ -29,8 +27,4 @@
                 %li= link_to "Log in", new_user_session_path
                 %li= link_to "Sign up", new_applicant_registration_path
       .container
-        - flash.each do |name, msg|
-          = content_tag :div, :class => "alert alert-#{ name == :error ? "danger" : "success" } alert-dismissable" do
-            %button.close{"aria-hidden" => "true", "data-dismiss" => "alert", type: "button"} ×
-            = msg
         = yield

@@ -97,8 +97,9 @@ class VacanciesController < ApplicationController
       format.html
       format.pdf {
         html = render_to_string(:layout => "pdf.html.erb" , :action => "new_pdf.html.erb")
-        kit = PDFKit.new(html, :page_size => 'Letter')
-        # kit.stylesheets << "#{Rails.root}/app/assets/stylesheets/application.css"
+        kit = PDFKit.new(html)
+        kit.stylesheets << "#{Rails.root}/app/assets/stylesheets/application.css"
+        kit.to_pdf
         send_data(kit.to_pdf, :filename => "#{@vacancy.title}_Vacancy.pdf", :type => 'application/pdf')
         return # to avoid double render call
       }

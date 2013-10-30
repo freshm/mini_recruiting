@@ -52,6 +52,7 @@ class JobApplicationsController < ApplicationController
     
     respond_to do |format|
       if @job_application.save
+        ApplicationNotifier.new_application(@vacancy, current_user).deliver
         format.html { redirect_to @vacancy, notice: 'Job application was successfully created.' }
         format.json { render json: @job_application, status: :created, location: [applicant, @job_application] }
       else

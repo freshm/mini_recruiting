@@ -4,7 +4,7 @@
     <div class="panel-heading text-center">
       <h4 class="panel-title">
         <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapse<%= "#{job_application.state}#{index}" %>">
-          <%= job_application.applicant.fullname %>
+          <%= job_application.user.fullname %>
         </a>
       </h4>
     </div>
@@ -12,13 +12,16 @@
       <div class="panel-body">
         <dl class="dl-horizontal">
           <dt>Firstname:</dt>
-          <dd><%= job_application.applicant.firstname %></dd>
+          <dd><%= link_to job_application.user.firstname, admin_user_path(job_application.user), style: "text-decoration: underline;" %></dd>
 
           <dt>Lastname:</dt>
-          <dd><%= job_application.applicant.lastname %></dd>
+          <dd><%= job_application.user.lastname %></dd>
+
+          <dt>Email:</dt>
+          <dd><%= job_application.user.email %></dd>
 
           <dt>Applied at:</dt>
-          <dd><%= job_application.created_at %></dd>
+          <dd><%= i18n_date(job_application.created_at) %></dd>
 
           <dt>Offered salary:</dt>
           <dd><%= job_application.salary %></dd>
@@ -26,15 +29,32 @@
           <dt>Note by applicant:</dt>
           <dd><%= job_application.note %></dd>
 
-          <% if moderator_signed_in? %>
+          <% if !current_user.admin? %>
             <div class="pull-right">
-              <%= link_to rate_application_good_path(job_application) do %>
+              <%= link_to rate_application_good_path(job_application), id: "rate_as_good_#{job_application.user.email}_#{job_application.vacancy.title}" do %>
               <span class="icon-thumbs-up"></span>
               <% end %>
-              <%= link_to "#" do %>
+              <%= link_to rate_application_bad_path(job_application), id: "rate_as_bad_#{job_application.user.email}_#{job_application.vacancy.title}" do %>
               <span class="icon-thumbs-down"></span>
               <% end %>
             </div>
+          <% else %>
+            <% if send?(job_application) %>
+              <div class="pull-right new-option">
+                <%= link_to "Forward", select_moderator_path(job_application), class: "icon-tags" %>
+                <%= link_to "Reject", reject_application_path(job_application), class: "icon-trash", id: "reject_#{job_application.id}" %>
+              </div>
+            <% elsif forwarded?(job_application) %>
+              <div class="pull-right new-option">
+                <h3>Reviewed by</h3>
+                <p><%= reviewed_by?(job_application) %></p>
+              </div>
+            <% elsif reviewed?(job_application) %>
+              <div class="pull-right new-option">
+                <%= link_to "Employ", employ_path(job_application), class: "icon-check", id: "employ_#{job_application.id}"  %>
+                <%= link_to "Reject", reject_application_path(job_application), class: "icon-trash", id: "reject_#{job_application.id}" %>
+              </div>
+            <% end %>
           <% end %>
         </dl>
       </div>

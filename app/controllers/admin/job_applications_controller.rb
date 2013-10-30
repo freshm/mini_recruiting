@@ -1,10 +1,11 @@
 class Admin::JobApplicationsController < ApplicationController
-  before_filter :verify_admin, except: [:index, :show, :rate_as_good]
+  before_filter :verify_admin, except: [:index, :show, :rate_as_good, :rate_as_bad]
   before_filter :verify_mod_privilges
   # GET /job_applications
   # GET /job_applications.json
   def index
-    @vacancies = Vacancy.all
+    @vacancies = Vacancy.all(include: :job_applications)
+    @job_assignments = JobAssignment.where(moderator_id: current_user.id)
 
     respond_to do |format|
       format.html # index.html.erb
@@ -17,11 +18,11 @@ class Admin::JobApplicationsController < ApplicationController
   def show
     @vacancy = Vacancy.find(params[:id])
     @job_applications = JobApplication.where(vacancy_id: @vacancy.id)
-    @new = JobApplication.where(state: "send", vacancy_id: @vacancy.id)
-    @forwarded = JobApplication.where(state: "manager_review", vacancy_id: @vacancy.id).includes(:applicant)
-    @reviewed = JobApplication.where(state: "manager_review_listed", vacancy_id: @vacancy.id).includes(:applicant)
-    @employed = JobApplication.where(state: "employed", vacancy_id: @vacancy.id).includes(:applicant)
-    @rejected = JobApplication.where(state: "rejected", vacancy_id: @vacancy.id).includes(:applicant)
+    @new = JobApplication.where(state: "send", vacancy_id: @vacancy.id).includes(:user)
+    @forwarded = JobApplication.where(state: "manager_review", vacancy_id: @vacancy.id).includes(:user)
+    @reviewed = JobApplication.where(state: "manager_review_listed", vacancy_id: @vacancy.id).includes(:user)
+    @employed = JobApplication.where(state: "employed", vacancy_id: @vacancy.id).includes(:user)
+    @rejected = JobApplication.where(state: "rejected", vacancy_id: @vacancy.id).includes(:user)
 
     respond_to do |format|
       format.html # show.html.erb
@@ -100,15 +101,46 @@ class Admin::JobApplicationsController < ApplicationController
     @job_application = JobApplication.find(params[:id])
     vacancy = @job_application.vacancy
     @job_application.mark_as_good
+    assignment = JobAssignment.find_by_job_application_id(@job_application.id)
+    ApplicationNotifier.reviewed_application(current_user, vacancy, @job_application.user).deliver
 
-    redirect_to admin_job_application_path(vacancy.id), notice: "Reviewed the application from #{@job_application.applicant.fullname} for #{@job_application.vacancy.title}"
+
+    redirect_to admin_job_application_path(vacancy.id), notice: "Reviewed the application from #{@job_application.user.fullname} for #{@job_application.vacancy.title}"
   end
 
   def rate_as_bad
     @job_application = JobApplication.find(params[:id])
     vacancy = @job_application.vacancy
     @job_application.mark_as_bad
+    assignment = JobAssignment.find_by_job_application_id(@job_application.id)
+    ApplicationNotifier.reviewed_application(current_user, vacancy, @job_application.user).deliver
 
-    redirect_to admin_job_application_path(vacancy.id), notice: "Reviewed the application from #{@job_application.applicant.fullname} for #{@job_application.vacancy.title}"
+    redirect_to admin_job_application_path(vacancy.id), notice: "Reviewed the application from #{@job_application.user.fullname} for #{@job_application.vacancy.title}"
+  end
+
+  def reject
+    @job_application = JobApplication.find(params[:id])
+    vacancy = @job_application.vacancy
+    @job_application.reject
+    @job_application.save!
+    ApplicationNotifier.rejected_application(vacancy, @job_application.user).deliver
+
+    redirect_to admin_job_application_path(vacancy.id), notice: "Rejected the application from #{@job_application.user.fullname} for #{@job_application.vacancy.title}"
+  end
+
+  def employ
+    @job_application = JobApplication.find(params[:id])
+    vacancy = @job_application.vacancy
+    @job_application.employ
+    @job_application.save!
+    ApplicationNotifier.accepted_application(vacancy, @job_application.user).deliver
+    # ApplicationNotifier.accepted_application_moderator(vacancy, @job_application.user).deliver
+
+    redirect_to admin_job_application_path(vacancy.id), notice: "Employed #{@job_application.user.fullname} for #{@job_application.vacancy.title}"
+  end
+
+  def select_moderator
+    @job_application = JobApplication.find(params[:id])
+    @assignment = JobAssignment.new()
   end
 end

@@ -8,3 +8,5 @@
 		<p><label><b>Requirement: </b></label> <%= @vacancy.requirement %></p><br />
 	</div>
 </div>
+
+<%= link_to "Download PDF", vacancy_pdf_path(@vacancy, :format => 'pdf') %>

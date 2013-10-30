@@ -31,16 +31,18 @@
                                                                 placement: "top"}
               - unless user.admin?
                 - if user.type == "Applicant"
-                  = link_to "", admin_promote_to_moderator_path(user), class: "icon-level-up moderator",                      |
-                                                            title: "Promote to Moderator",  |
-                                                            data: { toggle: "tooltip",      |
-                                                                    placement: "top"}
+                  = link_to "", admin_promote_to_moderator_path(user), class: "icon-level-up moderator",    |
+                                                                      id: "promote_#{user.email}",           |
+                                                                      title: "Promote to Moderator",        |
+                                                                      data: { toggle: "tooltip",            |
+                                                                              placement: "top"}
                 - else
 
                   = link_to "", admin_demote_to_applicant_path(user), class: "icon-level-down applicant",      |
-                                                            title: "Demote to Applicant",                |
-                                                            data: { toggle: "tooltip",    |
-                                                                    placement: "top"}
+                                                                      id: "demote_#{user.email}",              |
+                                                                      title: "Demote to Applicant",            |
+                                                                      data: { toggle: "tooltip",               |
+                                                                              placement: "top"}
 
 
               = link_to "", [:admin, user], class: "icon-trash delete",             |

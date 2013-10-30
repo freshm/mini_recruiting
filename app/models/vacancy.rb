@@ -8,7 +8,7 @@ class Vacancy < ActiveRecord::Base
   validates_presence_of :description, :location, :requirement, :title, :duties, :admin_id
   
   def already_taken_by_user?(user)
-    if JobApplication.where(vacancy_id: self.id, applicant_id: user.id).any?
+    if JobApplication.where(vacancy_id: self.id, user_id: user.id).any?
       true
     else
       false

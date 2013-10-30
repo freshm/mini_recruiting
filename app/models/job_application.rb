@@ -1,13 +1,15 @@
 class JobApplication < ActiveRecord::Base
-  attr_accessible :vacancy_id, :applicant_id, :note, :salary
+  attr_accessible :vacancy_id, :user_id, :note, :salary
+
+  alias_attribute :applicant_id, :user_id
   
   validates_presence_of :vacancy_id, :applicant_id
-  validates :applicant_id, :uniqueness => {:scope => :vacancy_id}
+  validates :user_id, :uniqueness => {:scope => :vacancy_id}
   
-  #accepts_nested_attributes_for :applicant
-  
-  belongs_to :applicant
+  belongs_to :user
   belongs_to :vacancy
+  has_many :job_assignments, dependent: :destroy
+  has_many :moderators, through: :job_assignments
 
   state_machine :initial => :send do
 

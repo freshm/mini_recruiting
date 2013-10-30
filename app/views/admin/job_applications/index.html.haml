@@ -1,3 +1,6 @@
 .row
-  = render "admin/sidebar"
-  = render "admin/job_applications/admin_index"
+	= render "admin/sidebar"
+	- if current_user.admin?
+		= render "admin/job_applications/admin_index"
+	- else
+		= render "admin/job_applications/moderator_index"

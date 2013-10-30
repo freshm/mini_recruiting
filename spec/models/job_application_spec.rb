@@ -13,7 +13,7 @@ describe JobApplication do
     before(:each) { @jAp = FactoryGirl.create(:job_application)}
     
     it "should be invalid without an applicant" do
-      @jAp.applicant = nil
+      @jAp.user = nil
       @jAp.should_not be_valid
     end
     
@@ -33,14 +33,14 @@ describe JobApplication do
     end
     
     it "should be destroy after the applicant is destroyed" do
-      app = @jAp.applicant
-      app.destroy
+      user = @jAp.user
+      user.destroy
       JobApplication.find_by_id(@jAp.id).should be_nil
     end
     
     it "should be destroy after the applicant is destroyed" do
-      adv = @jAp.vacancy
-      adv.destroy
+      vacancy = @jAp.vacancy
+      vacancy.destroy
       Vacancy.find_by_id(@jAp.id).should be_nil
     end
   end
