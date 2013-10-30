@@ -1,4 +1,5 @@
 <div class="row">
+	<%= image_tag "corporate-logo.png", style: "margin-left: 85%" %>
 	<h1><%= @vacancy.title %></h1>
 	<hr/>
 	<div class="content">
@@ -9,4 +10,13 @@
 	</div>
 </div>
 
-<%= link_to "Download PDF", vacancy_pdf_path(@vacancy, :format => 'pdf') %>
+<%= form_tag controller: "vacancies", action: "generate_pdf", format: "pdf" do %>
+<%= text_area_tag("footer",
+	# Initial text
+	 "Here's a sample footer. Add your own footer here for the PDF or delete it.",
+	 class: "form-control",
+	 rows: 10,
+	 cols: 20 ) %>
+	 <br/>
+<%= submit_tag("Generate PDF", class: "btn btn-primary btn-lg") %>
+<% end %>

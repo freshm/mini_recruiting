@@ -92,16 +92,51 @@ class VacanciesController < ApplicationController
   def new_pdf
     @vacancy = Vacancy.find(params[:id])
 
-    respond_to do |format|
+    # PDFKit.new takes the HTML and any options for wkhtmltopdf
+    # run `wkhtmltopdf --extended-help` for a full list of options
+    
 
+    respond_to do |format|
       format.html
       format.pdf {
-        html = render_to_string(:layout => "pdf.html.erb" , :action => "new_pdf.html.erb")
-        kit = PDFKit.new(html)
+        kit = PDFKit.new(vacancy_generate_html_for_pdf(@vacancy), :page_size => 'Letter')
         kit.stylesheets << "#{Rails.root}/app/assets/stylesheets/application.css"
-        kit.to_pdf
+        pdf = kit.to_pdf
         send_data(kit.to_pdf, :filename => "#{@vacancy.title}_Vacancy.pdf", :type => 'application/pdf')
-        return # to avoid double render call
+      }
+    end
+
+    # Get an inline PDF
+    
+    # @vacancy = Vacancy.find(params[:id])
+
+    # respond_to do |format|
+
+    #   format.html
+    #   format.pdf {
+    #     html = render_to_string(:layout => "pdf.html.erb" , :action => "new_pdf.html.erb")
+    #     kit = PDFKit.new(html)
+    #     kit.stylesheets << "#{Rails.root}/app/assets/stylesheets/application.css"
+    #     kit.to_pdf
+    #     
+    #     return # to avoid double render call
+    #   }
+    # end
+  end
+
+  def generate_pdf
+    @vacancy = Vacancy.find(params[:id])
+    footer = params[:footer]
+    object = [@vacancy, footer]
+
+    
+    respond_to do |format|
+      format.html
+      format.pdf {
+        kit = PDFKit.new(vacancy_generate_html_for_pdf(object), :page_size => 'Letter')
+        kit.stylesheets << "#{Rails.root}/app/assets/stylesheets/application.css"
+        pdf = kit.to_pdf
+        send_data(kit.to_pdf, :filename => "#{@vacancy.title}_Vacancy.pdf", :type => 'application/pdf')
       }
     end
   end
