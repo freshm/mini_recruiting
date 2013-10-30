@@ -87,4 +87,39 @@ class Admin::VacanciesController < ApplicationController
       format.json { head :no_content }
     end
   end
+
+  def new_pdf
+    @vacancy = Vacancy.find(params[:id])
+
+    # PDFKit.new takes the HTML and any options for wkhtmltopdf
+    # run `wkhtmltopdf --extended-help` for a full list of options
+    
+
+    respond_to do |format|
+      format.html
+      format.pdf {
+        kit = PDFKit.new(vacancy_generate_html_for_pdf(@vacancy), :page_size => 'Letter')
+        kit.stylesheets << "#{Rails.root}/app/assets/stylesheets/application.css"
+        pdf = kit.to_pdf
+        send_data(kit.to_pdf, :filename => "#{@vacancy.title}_Vacancy.pdf", :type => 'application/pdf')
+      }
+    end
+  end
+
+  def generate_pdf
+    @vacancy = Vacancy.find(params[:id])
+    footer = params[:footer]
+    object = [@vacancy, footer]
+
+
+    respond_to do |format|
+      format.html
+      format.pdf {
+        kit = PDFKit.new(vacancy_generate_html_for_pdf(object), :page_size => 'Letter')
+        kit.stylesheets << "#{Rails.root}/app/assets/stylesheets/application.css"
+        pdf = kit.to_pdf
+        send_data(kit.to_pdf, :filename => "#{@vacancy.title}_Vacancy.pdf", :type => 'application/pdf')
+      }
+    end
+  end
 end

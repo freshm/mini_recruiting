@@ -7,8 +7,10 @@ class ApplicationController < ActionController::Base
   end
 
   def vacancy_generate_html_for_pdf(object)
+    host = request.host
+    port = request.port
     "<div class='row'>
-          <img src='http://localhost:3000/assets/corporate-logo.png' />
+          <img src='http://#{host.to_s}:#{port.to_s}/images/corporate-logo.png' style='margin-left: 85%'/>
           <h1>#{object[0].title}</h1>
           <hr/>
           <div class='content'>

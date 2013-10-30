@@ -1,0 +1,22 @@
+<div class="row">
+	<%= image_tag "corporate-logo.png", style: "margin-left: 85%" %>
+	<h1><%= @vacancy.title %></h1>
+	<hr/>
+	<div class="content">
+		<p><label><b>Location: </b></label> <%= @vacancy.location %></p><br />
+		<p><label><b>Description: </b></label> <%= @vacancy.description %></p><br />
+		<p><label><b>Duties: </b></label> <%= @vacancy.duties %></p><br />
+		<p><label><b>Requirement: </b></label> <%= @vacancy.requirement %></p><br />
+	</div>
+</div>
+
+<%= form_tag controller: "vacancies", action: "generate_pdf", format: "pdf" do %>
+<%= text_area_tag("footer",
+	# Initial text
+	 "Here's a sample footer. Add your own footer here for the PDF or delete it.",
+	 class: "form-control",
+	 rows: 10,
+	 cols: 20 ) %>
+	 <br/>
+<%= submit_tag("Generate PDF", class: "btn btn-primary btn-lg") %>
+<% end %>

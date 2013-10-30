@@ -24,6 +24,8 @@ MiniRecruiting::Application.routes.draw do
     resources :vacancies
     resources :job_applications
     root :to => 'users#index'
+    get "vacancies/:id/pdf" , to: "vacancies#new_pdf", as: "vacancy_pdf"
+    post "vacancies/:id/g_pdf" , to: "vacancies#generate_pdf", as: "vacancy_g_pdf"
   end
   get "/guest/apply_for/:vacancy_id/new", to: "guest_apply#new", as: "guest_new"
   post "/guest/apply_for/:vacancy_id/", to: "guest_apply#create", as: "guest_create"

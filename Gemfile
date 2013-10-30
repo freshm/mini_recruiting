@@ -30,7 +30,7 @@ gem 'jquery-ui-rails'
 # gem 'jbuilder'
 
 # Use unicorn as the app server
-# gem 'unicorn'
+gem 'unicorn', group: :development
 
 # Deploy with Capistrano
 # gem 'capistrano'
