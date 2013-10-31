@@ -51,6 +51,9 @@
               </div>
             <% elsif reviewed?(job_application) %>
               <div class="pull-right new-option">
+                <h3>Reviewed by</h3>
+                <p><%= reviewed_by?(job_application) %></p>
+                <br />
                 <%= link_to "Employ", employ_path(job_application), class: "icon-check", id: "employ_#{job_application.id}"  %>
                 <%= link_to "Reject", reject_application_path(job_application), class: "icon-trash", id: "reject_#{job_application.id}" %>
               </div>

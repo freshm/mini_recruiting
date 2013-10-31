@@ -105,23 +105,6 @@ class VacanciesController < ApplicationController
         send_data(kit.to_pdf, :filename => "#{@vacancy.title}_Vacancy.pdf", :type => 'application/pdf')
       }
     end
-
-    # Get an inline PDF
-    
-    # @vacancy = Vacancy.find(params[:id])
-
-    # respond_to do |format|
-
-    #   format.html
-    #   format.pdf {
-    #     html = render_to_string(:layout => "pdf.html.erb" , :action => "new_pdf.html.erb")
-    #     kit = PDFKit.new(html)
-    #     kit.stylesheets << "#{Rails.root}/app/assets/stylesheets/application.css"
-    #     kit.to_pdf
-    #     
-    #     return # to avoid double render call
-    #   }
-    # end
   end
 
   def generate_pdf
@@ -129,7 +112,7 @@ class VacanciesController < ApplicationController
     footer = params[:footer]
     object = [@vacancy, footer]
 
-    
+
     respond_to do |format|
       format.html
       format.pdf {

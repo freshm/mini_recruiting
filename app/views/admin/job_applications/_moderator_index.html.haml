@@ -14,3 +14,20 @@
             %td.text-center= link_to assignment.job_application.user.fullname, admin_job_application_path(assignment.job_application.vacancy)
   - else
     %p There are currently no assignments to review.
+
+
+.col-md-10
+  .page-header
+    %h1 Job Applications to review
+  - if @job_assignments.any?
+    .table-responsive
+      %table.table.table-striped.table-bordered.table-hover
+        - @job_assignments_vacancy.each_with_index do |j, index|
+          %thead
+            %tr
+              %th.text-center{colspan: "2"}= j[0]
+          %tbody
+            %td= link_to "Applicants to review", admin_job_application_path(Vacancy.find_by_title(j))
+            %td.text-center= link_to j[1], admin_job_application_path(Vacancy.find_by_title(j))
+  - else
+    %p There are currently no assignments to review.

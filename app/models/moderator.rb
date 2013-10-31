@@ -1,6 +1,6 @@
 class Moderator < User
 	has_many :job_assignments, dependent: :destroy
-	has_many :job_applications, through: :job_assignments
+	has_many :applications_to_review, through: :job_assignments, source: :job_application
 	def admin?
 		false
 	end

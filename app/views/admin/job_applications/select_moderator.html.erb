@@ -7,7 +7,7 @@
 		<%= semantic_form_for(@assignment) do |f| %>
 			<%= f.inputs do %>
 				<%= f.input :moderator, :include_blank => false %>
-				<%= f.input :job_application, as: :hidden, value: @job_application.id %>
+				<%= f.input :job_application, as: :hidden, input_html: { value: @job_application.id } %>
 			<% end %>
 			<br />
 			<%= f.actions do %>

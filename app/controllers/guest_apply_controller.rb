@@ -28,6 +28,7 @@ class GuestApplyController < ApplicationController
             format.html { redirect_to root_path, notice: 'Welcome! You have signed up and applied successfully for this vacancy.' }
             format.json { render json: @applicant, status: :created, location: @applicant }
             sign_in(:user, @applicant)
+            ApplicationNotifier.new_application(@vacancy, @applicant).deliver
           end
         else
             format.html { redirect_to root_path, notice: 'Welcome! You have signed up but your application could not be proccessed.' }

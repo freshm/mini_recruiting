@@ -5,7 +5,16 @@ class Admin::JobApplicationsController < ApplicationController
   # GET /job_applications.json
   def index
     @vacancies = Vacancy.all(include: :job_applications)
-    @job_assignments = JobAssignment.where(moderator_id: current_user.id)
+    @job_assignments = JobAssignment.where(moderator_id: current_user.id, reviewed: false)
+    @job_assignments_vacancy = {}
+
+    @job_assignments.each do |j|
+      if @job_assignments_vacancy[j.job_application.vacancy.title] == nil
+        @job_assignments_vacancy[j.job_application.vacancy.title]  = 1
+      else
+        @job_assignments_vacancy[j.job_application.vacancy.title] += 1
+      end
+    end
 
     respond_to do |format|
       format.html # index.html.erb
@@ -102,6 +111,8 @@ class Admin::JobApplicationsController < ApplicationController
     vacancy = @job_application.vacancy
     @job_application.mark_as_good
     assignment = JobAssignment.find_by_job_application_id(@job_application.id)
+    assignment.reviewed = true
+    assignment.save
     ApplicationNotifier.reviewed_application(current_user, vacancy, @job_application.user).deliver
 
 
@@ -113,6 +124,8 @@ class Admin::JobApplicationsController < ApplicationController
     vacancy = @job_application.vacancy
     @job_application.mark_as_bad
     assignment = JobAssignment.find_by_job_application_id(@job_application.id)
+    assignment.reviewed = true
+    assignment.save
     ApplicationNotifier.reviewed_application(current_user, vacancy, @job_application.user).deliver
 
     redirect_to admin_job_application_path(vacancy.id), notice: "Reviewed the application from #{@job_application.user.fullname} for #{@job_application.vacancy.title}"
