@@ -153,5 +153,10 @@ class Admin::JobApplicationsController < ApplicationController
   def select_moderator
     @job_application = JobApplication.find(params[:id])
     @assignment = JobAssignment.new()
+
+    respond_to do |format|
+      format.html
+      format.js
+    end
   end
 end

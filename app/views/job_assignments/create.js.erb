@@ -1,0 +1,23 @@
+$(".alert").remove();
+$(".select-manager").remove();
+$(".page-header").after("<div class=\"alert alert-success alert-dismissable\"><button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-hidden=\"true\">&times;</button>Assigned <%= @assignment.manager.fullname %>").slideDown();
+
+var rejected = "#h_forwarded"
+if ($(rejected)) {
+	$(rejected).remove();
+}
+
+var user = $("#user_<%= @assignment.job_application.user.id %>");
+user.appendTo($(".accordion_forwarded"));
+user.find($(".new-option")).replaceWith("<div class=\"pull-right new-option\"><h3>Reviewed by</h3><p><%= reviewed_by?(@assignment.job_application) %></p></div>");
+user.collapse();
+
+<%# DEcrements the amount of the New Tab%>
+var amount = parseInt($("#tab_1").text());
+amount--;
+$("#tab_1").text(amount);
+
+<%# Increments the amount of the Forwarded Tab%>
+var amount = parseInt($("#tab_2").text());
+amount++;
+$("#tab_2").text(amount);

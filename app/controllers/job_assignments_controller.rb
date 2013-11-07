@@ -8,7 +8,10 @@ class JobAssignmentsController < ApplicationController
 
 		if @assignment.save
 			ApplicationNotifier.forwarded_application(Manager.find_by_id(manager_id), j.vacancy, j.user).deliver
-			redirect_to admin_job_application_path(@assignment.job_application.vacancy.id), notice: "Assigned #{@assignment.manager.fullname}"
+			respond_to do |format|
+		      format.html { redirect_to admin_job_application_path(@assignment.job_application.vacancy.id), notice: "Assigned #{@assignment.manager.fullname}" }
+		      format.js
+		    end
 		else
 			flash[:error] = "Moderator was already assigned to this job application."
 			redirect_to select_moderator_path(application_id)
