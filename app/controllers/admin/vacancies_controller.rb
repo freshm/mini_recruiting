@@ -19,6 +19,7 @@ class Admin::VacanciesController < ApplicationController
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @vacancy }
+      format.js
     end
   end
 

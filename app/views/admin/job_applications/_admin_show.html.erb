@@ -6,10 +6,30 @@
     </div>
     <div id="tabs">
       <ul>
-        <li><a href="#tabs-1">Newly send</a></li>
-        <li><a href="#tabs-2">Forwarded to manager</a></li>
-        <li><a href="#tabs-3">Reviewed by manager</a></li>
-        <li><a href="#tabs-4">Employed</a></li>
+        <li>
+          <a href="#tabs-1">
+            <span class="badge pull-right"><%= @new.count %></span>
+            Newly send
+          </a>
+        </li>
+        <li>
+          <a href="#tabs-2">
+            <span class="badge pull-right"><%= @forwarded.count %></span>
+            Forwarded to manager
+          </a>
+        </li>
+        <li>
+          <a href="#tabs-3">
+            <span class="badge pull-right"><%= @reviewed.count %></span>
+            Reviewed by manager
+          </a>
+        </li>
+        <li>
+          <a href="#tabs-4">
+            <span class="badge pull-right"><%= @employed.count %></span>
+            Employed
+          </a>
+        </li>
         <li><a href="#tabs-5">Rejected</a></li>
       </ul>
       <div id="tabs-1">

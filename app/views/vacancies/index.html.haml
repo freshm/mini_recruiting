@@ -1,7 +1,4 @@
 .page-header
-  - if user_signed_in? && current_user.admin?
-    = link_to new_admin_vacancy_path, class: "btn btn-primary pull-right" do
-      Add Vacancy
   %h1 Current vacancies
 
 = paginate @vacancies

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131107082610) do
+ActiveRecord::Schema.define(:version => 20131107110023) do
 
   create_table "admins", :force => true do |t|
     t.datetime "created_at", :null => false
@@ -32,6 +32,9 @@ ActiveRecord::Schema.define(:version => 20131107082610) do
     t.datetime "updated_at", :null => false
     t.string   "state"
   end
+
+  add_index "job_applications", ["user_id"], :name => "index_job_applications_on_user_id"
+  add_index "job_applications", ["vacancy_id"], :name => "index_job_applications_on_vacancy_id"
 
   create_table "job_assignments", :force => true do |t|
     t.integer  "manager_id"
@@ -75,5 +78,7 @@ ActiveRecord::Schema.define(:version => 20131107082610) do
     t.integer  "admin_id"
     t.string   "duties"
   end
+
+  add_index "vacancies", ["admin_id"], :name => "index_vacancies_on_admin_id"
 
 end

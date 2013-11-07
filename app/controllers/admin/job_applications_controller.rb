@@ -4,8 +4,22 @@ class Admin::JobApplicationsController < ApplicationController
   # GET /job_applications
   # GET /job_applications.json
   def index
-    @vacancies = Vacancy.all
-    @job_assignments = JobAssignment.where(manager_id: current_user.id, reviewed: false)
+    if current_user.admin?
+      @state = params[:state]
+
+      if @state == ""
+        @state = "send"
+      end
+      @new = JobApplication.where(state: @state)
+      @vacancies = Vacancy.all
+    else
+      @job_assignments = JobAssignment.where(manager_id: current_user.id, reviewed: false)
+    end
+
+    respond_to do |format|
+      format.html # show.html.erb
+      format.js
+    end
   end
 
   # GET /job_applications/1
