@@ -10,10 +10,8 @@ class ApplicationNotifier < ActionMailer::Base
     @vacancy = vacancy
     @user = user
     admins = Admin.all
-
-    admins.each do |admin|
-      mail to: admin.email, subject: "New Job Application by #{@user.fullname} for #{@vacancy.title}"
-    end
+    
+    mail to: @vacancy.admin.email, subject: "New Job Application by #{@user.fullname} for #{@vacancy.title}"
   end
 
   # Subject can be set in your I18n file at config/locales/en.yml
@@ -41,9 +39,22 @@ class ApplicationNotifier < ActionMailer::Base
     admins = Admin.all
 
     admins.each do |admin|
-      mail to: admin.email, subject: "Application by #{@user.fullname} for #{@vacancy.title} was reviewed by #{@moderator.fullname}"
+      mail to: admin.email, subject: "Application by #{@user.fullname} for #{@vacancy.title} was reviewed by #{@moderator.fullname} as good"
     end
   end
+
+
+  def bad_reviewed_application(moderator, vacancy, user)
+    @moderator = moderator
+    @vacancy = vacancy
+    @user = user
+    admins = Admin.all
+
+    admins.each do |admin|
+      mail to: admin.email, subject: "Application by #{@user.fullname} for #{@vacancy.title} was reviewed by #{@moderator.fullname} as bad"
+    end
+  end
+
 
   # Subject can be set in your I18n file at config/locales/en.yml
   # with the following lookup:

@@ -34,7 +34,7 @@ class ApplicationController < ActionController::Base
   end
 
   def verify_mod_privilges
-    unless user_signed_in? && current_user.admin? || current_user.type == "Moderator"
+    unless user_signed_in? && current_user.admin? || current_user.type == "Manager"
       flash[:error] = "You have no power here!" 
       redirect_to root_url
     end

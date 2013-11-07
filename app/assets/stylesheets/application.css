@@ -88,3 +88,12 @@ a .big-font {
     margin: 0;
   }
 }
+
+.close-container {
+  color: #666;
+  cursor: pointer;
+}
+
+.close-container:hover {
+  color: #000;
+}

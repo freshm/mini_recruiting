@@ -12,6 +12,7 @@
     = f.input :firstname
     = f.input :lastname
     = f.input :email
+  / = f.input :type, as: :radio, collection: ["Admin", "Manager", "Applicant"], include_blank: false
 
   = f.inputs name: "Security" do
     = f.input :password, label: "New Password", required: false

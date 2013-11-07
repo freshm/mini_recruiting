@@ -7,7 +7,7 @@
     %meta{name: "author", content: ""}
     / HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries
     /[if lt IE 9]
-      = javascript_include_tag "bootstrap-ie"
+    /= javascript_include_tag "bootstrap-ie"
     = stylesheet_link_tag     "application", media: "all", "data-turbolinks-track" => true
     = javascript_include_tag  "application", "data-turbolink-track" => true
     = csrf_meta_tags
@@ -24,15 +24,16 @@
           .collapse.navbar-collapse.pull-right
             %ul.nav.navbar-nav
               - if user_signed_in?
+                %p.navbar-text #{current_user.email}
                 - if current_user.admin?
-                  %li= link_to "Admin area", admin_root_path
-                - elsif current_user.type == "Moderator"
-                  %li= link_to "Admin area", admin_job_applications_path
-                %li= link_to "Edit Profile", edit_user_registration_path
+                  %li{class: ('active' if admin_controller?(params[:controller]))}= link_to "Admin area", admin_root_path
+                - elsif current_user.type == "Manager"
+                  %li{class: ('active' if admin_controller?(params[:controller]))}= link_to "Admin area", admin_job_applications_path
+                %li{class: ('active' if params[:controller] == 'devise/registrations')}= link_to "Edit Profile", edit_user_registration_path
                 %li= link_to "Log out", destroy_user_session_path, method: :delete
               - else
-                %li= link_to "Log in", new_user_session_path
-                %li= link_to "Sign up", new_applicant_registration_path
+                %li{class: ('active' if params[:controller] == 'sessions')}= link_to "Log in", new_user_session_path
+                %li{class: ('active' if params[:controller] == 'applicant_registrations')}= link_to "Sign up", new_applicant_registration_path
       .container
         - flash.each do |name, msg|
           = content_tag :div, :class => "alert alert-#{ name == :error ? "danger" : "success" } alert-dismissable" do

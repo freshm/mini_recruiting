@@ -30,6 +30,7 @@ class Admin::VacanciesController < ApplicationController
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @vacancy }
+      format.js
     end
   end
 
@@ -53,9 +54,11 @@ class Admin::VacanciesController < ApplicationController
       if @vacancy.save
         format.html { redirect_to [:admin, @vacancy], notice: 'Vacancy was successfully created.' }
         format.json { render json: @vacancy, status: :created, location: @vacancy }
+        format.js
       else
         format.html { render action: "new" }
         format.json { render json: @vacancy.errors, status: :unprocessable_entity }
+        format.js { render "new" }
       end
     end
   end
@@ -85,6 +88,7 @@ class Admin::VacanciesController < ApplicationController
     respond_to do |format|
       format.html { redirect_to admin_vacancies_url, notice: "Vacancy was successfully deleted."  }
       format.json { head :no_content }
+      format.js
     end
   end
 

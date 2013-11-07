@@ -22,6 +22,36 @@ $( document ).ready ( function() {
 	$(".delete").tooltip();
 	$(".applicant").tooltip();
 	$(".moderator").tooltip();
-
 	$( "#tabs" ).tabs();
+
+
+	$("#vacancy_new_close").on("click", function() {
+		$("#new_link_top").show();
+		$("#new_link_bottom").show();
+		$("new_vacancy").remove();
+	});
 });
+
+$(document).on("click", ".close-container", function() {
+	$("#new_user_container").remove();
+	$("#new_user_top").show();
+	$("#new_user_bottom").show();
+});
+
+$(document).on("click", ".close-container", function() {
+	$("#new_link_top").show();
+	$("#new_link_bottom").show();
+	$("#new_vacancy_container").remove();
+});
+
+
+function scrollToElement(selector, time, verticalOffset) {
+    time = typeof(time) != 'undefined' ? time : 1000;
+    verticalOffset = typeof(verticalOffset) != 'undefined' ? verticalOffset : 0;
+    element = $(selector);
+    offset = element.offset();
+    offsetTop = offset.top + verticalOffset;
+    $('html, body').animate({
+        scrollTop: offsetTop
+    }, time);
+}

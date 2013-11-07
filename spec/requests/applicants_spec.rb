@@ -53,14 +53,14 @@ describe "Applicants" do
     page.should have_content("Lastname")
     page.should have_content("Email")
     page.should have_content("Password")
-    page.should have_content("Password confirmation")
-    page.should have_content("Current password")
+    page.should have_content("New Password Confirmation")
+    page.should have_content("Current Password")
 
     fill_in "Firstname", with: "Whatever"
     fill_in "Lastname", with: "Maeh"
     fill_in "Email", with: "maeh@maeh.com"
-    fill_in "Current password", with: "testpass"
-    click_button "Update User"
+    fill_in "Current Password", with: "testpass"
+    click_button "Update"
 
     assert_equal current_url, root_url
   end

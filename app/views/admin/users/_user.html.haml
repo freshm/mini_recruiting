@@ -1,0 +1,25 @@
+%tr.user{id: "user_#{user.id}"}
+  %td= user.firstname
+  %td= user.lastname
+  %td= user.email
+  %td= user.type
+  %td.text-center
+    = link_to "", admin_user_path(user), class: "icon-eye-open eye",         |
+                                         id: user.email,                     |
+                                         title: "Show",                      |
+                                         data: {toggle: "tooltip",           |
+                                                placement: "top"}
+
+    = link_to "", edit_admin_user_path(user), class: "icon-edit edit",      |
+                                              title: "Edit",                |
+                                              data: { toggle: "tooltip",    |
+                                                      placement: "top"}
+    - unless user.admin?
+      = link_to "", [:admin, user], class: "icon-trash delete",             |
+                                    id: "delete_#{user.email}",             |
+                                    title: "Delete",                        |
+                                    remote: :true,                          |
+                                    method: :delete,                        |
+                                    data: { confirm:   "Are you sure?",     |
+                                            toggle:    "tooltip",           |
+                                            placement: "top" }

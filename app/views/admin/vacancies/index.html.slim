@@ -2,11 +2,12 @@ div.row
   = render "admin/sidebar"
   div.col-md-10
     div.page-header
-      - if user_signed_in? && current_user.admin?
-        = link_to new_admin_vacancy_path, :class => 'btn btn-primary pull-right icon-plus-sign' do
-          | Add
       h1 Current vacancies
-
+    - if user_signed_in? && current_user.admin?
+      = link_to new_admin_vacancy_path, id: "new_link_top", :class => 'btn btn-primary pull-right icon-plus-sign', remote: true do
+        | &nbsp Add Vacancy
+    br
+    br
     table-responsive
       table.table.table-striped.table-bordered.table-hover
         thead
@@ -34,8 +35,12 @@ div.row
                                                                         placement: "top" }
                 | &nbsp;
                 = link_to "", admin_vacancy_path(vacancy), class: "icon-trash delete",              \
-                                                           id: "delete_#{vacancy.title}",            \
+                                                           id: "delete_#{vacancy.title}",           \
                                                            title: "Delete",                         \
+                                                           remote: true,                            \
                                                            method: :delete,                         \
                                                            data: { toggle: "tooltip",               \
+                                                                   confirm: "Are you sure?",        \
                                                                    placement: "top" }
+    = link_to new_admin_vacancy_path, id: "new_link_bottom", :class => 'btn btn-primary pull-right icon-plus-sign', remote: true do
+      | &nbsp Add Vacancy

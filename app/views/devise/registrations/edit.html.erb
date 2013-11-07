@@ -1,36 +1,83 @@
 <div class="row">
-  <div class="col-md-6">
-       <h2>Edit <%= resource_name.to_s.humanize %></h2>
-    <%= semantic_form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :method => :put }) do |f| %>
-      <%= devise_error_messages! %>
-      
-      <%= f.inputs :name => "Personal" do %>
-          <%= f.input :firstname %>
-          <%= f.input :lastname %>
-          <%= f.input :email %>
+  <div class="col-md-offset-1 mdcol-md-10 well">
+    <div class="row">
+      <% if current_user.admin? %>
+      <div class="col-md-12">
+      <% else %>
+      <div class="col-md-8">
       <% end %>
-      
-      <%= f.inputs :name => "Security" do %>
-          <%= f.input :password %><i>(leave blank if you don't want to change it)</i><br />
-          <%= f.input :password_confirmation %>
-          <%= f.input :current_password %>
+       <h2 class="page-header text-center">Edit your Profile</h2>
+       <%= semantic_form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :method => :put }) do |f| %>
+       <%= devise_error_messages! %>
+
+       <div class="row">
+        <div class="col-xs-4 col-md-4">
+          <div class="input-group">
+            <span class="input-group-addon">Firstname</span>
+            <%= f.text_field :firstname, focus: true, placeholder: "Firstname", class: "form-control" %>
+          </div>
+        </div>
+
+        <div class="col-xs-4 col-md-4">
+          <div class="input-group">
+            <span class="input-group-addon">Lastname</span>
+            <%= f.text_field :lastname, required: true, placeholder: "Lastname", class: "form-control" %>
+          </div>
+        </div>
+
+        <div class="col-xs-4 col-md-4">
+          <div class="input-group">
+            <span class="input-group-addon">Email</span>
+            <%= f.email_field :email, required: true, placeholder: "Email", class: "form-control" %>
+          </div>
+        </div>
+      </div>
+
+      <br />
+      <div class="row">
+        <div class="col-xs-6 col-md-6">
+          <div class="input-group">
+            <span class="input-group-addon">New Password</span>
+            <%= f.password_field :password, focus: true, placeholder: "New Password", class: "form-control" %>
+          </div>
+          <i>(leave blank if you don't want to change it)</i>
+        </div>
+        <div class="col-xs-6 col-md-6">
+          <div class="input-group">
+            <span class="input-group-addon">New Password Confirmation</span>
+            <%= f.password_field :password_confirmation, required: true, placeholder: "New Password Confirmation", class: "form-control" %>
+          </div>
+        </div>
+      </div>
+      <br />
+      <div class="row">
+        <div class="col-xs-offset-2 col-md-offset-2 col-xs-5 col-md-5">
+          <div class="input-group">
+            <span class="input-group-addon">Current Password</span>
+            <%= f.password_field :current_password, required: true, placeholder: "Current Password", class: "form-control" %>
+          </div>
+          <i>(required to change your Profile)</i>
+        </div>
+        <div class="col-xs-4 col-md-4">
+          <div class="input-group">
+            <%= f.submit "Update", class: "btn btn-primary btn-large" %>
+          </div>
+        </div>
+      </div>
       <% end %>
-      <br/>
-      <%= f.actions do %>
-          <%= f.action :submit, :as => :button %>
-      <% end %>
-    <% end %>
-  </div>
-  <% if !current_user.admin? %>
-    <div class="col-md-5">
+      </div>
+      <% if !current_user.admin? %>
+      <div class="col-md-4">
         <%= render_cell :applicant_sidebar, :display, :user => @current_user %>
+      </div>
+      <% end %>
     </div>
-  <% end %>
-</div>
-<div class="row">
+    <div class="row">
   <div class="col-md-8 col-md-offset-4">
-      <h3>Unhappy?</h3><%= button_to "Cancel my account", registration_path(resource_name), :data => { :confirm => "Are you sure?" }, :method => :delete %>
-      
-      <%= link_to "Back", :back %>
+    <h3>Unhappy?</h3><%= button_to "Cancel my account", registration_path(resource_name), :data => { :confirm => "Are you sure?" }, :method => :delete %>
+
+    <%= link_to "Back", :back %>
   </div>
+</div>
+</div>
 </div>

@@ -1,0 +1,5 @@
+$("#new_user_container").remove();
+$("#new_user_top").show();
+$("#new_user_bottom").show();
+
+$(".<%= @user.type %>:last").after("<%= j render(@user) %>");

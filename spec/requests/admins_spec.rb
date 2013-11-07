@@ -21,13 +21,13 @@ describe "Admins" do
 
 	    page.should have_content("Current vacancies")
 
-	    click_link "Add"
+	    click_link "new_link_top"
 
-	    fill_in "Title", with: "Title"
-	    fill_in "Location", with: "Here"
-	    fill_in "Requirement", with: "Tests"
-	    fill_in "Description", with: "Lore ipsum text here"
-	    fill_in "Duties", with: "Do something"
+	    fill_in "vacancy_title", with: "Title"
+	    fill_in "vacancy_location", with: "Here"
+	    fill_in "vacancy_requirement", with: "Tests"
+	    fill_in "vacancy_description", with: "Lore ipsum text here"
+	    fill_in "vacancy_duties", with: "Do something"
 
 	    click_button "Create Vacancy"
 
@@ -228,57 +228,10 @@ describe "Admins" do
 	    page.should have_content("Signed out successfully.")
 	end
 
-	it "can login, and promote an applicant to a moderator." do
-	  	admin = FactoryGirl.create(:admin)
-	  	applicant = FactoryGirl.create(:applicant)
-	  	assert_equal applicant.type,  "Applicant"
-	    visit "/users/sign_in"
-
-	    fill_in "Email",    :with => admin.email
-	    fill_in "Password", :with => "testpass"
-
-	    click_button "Sign in"
-
-	    page.should have_content("Signed in successfully.")
-	    page.should have_content("Applicant")
-	    page.should_not have_content("Moderator")
-	    
-	    assert_equal admin_root_url, current_url
-
-	    click_link "promote_#{applicant.email}"
-
-	    page.should have_content("#{applicant.fullname} was granted Moderator privileges.")
-	    find("table").should_not have_content("Applicant")
-	    page.should have_content("Moderator")
-	end
-
-	it "can login, and demote a moderator to an applicant." do
-	  	admin = FactoryGirl.create(:admin)
-	  	moderator = FactoryGirl.create(:moderator)
-	  	assert_equal moderator.type,  "Moderator"
-	    visit "/users/sign_in"
-
-	    fill_in "Email",    :with => admin.email
-	    fill_in "Password", :with => "testpass"
-
-	    click_button "Sign in"
-
-	    page.should have_content("Signed in successfully.")
-	    page.should_not have_content("Applicant")
-	    page.should have_content("Moderator")
-	    
-	    assert_equal admin_root_url, current_url
-
-	    click_link "demote_#{moderator.email}"
-
-	    page.should have_content("#{moderator.fullname} Moderator privileges were withdrawn.")
-	    find("table").should have_content("Applicant")
-	end
-
 	it "can forward an new application" do
 		Capybara.current_session.driver.header('Accept-Language', 'de')
 	  	admin = FactoryGirl.create(:admin)
-	  	moderator = FactoryGirl.create(:moderator)
+	  	manager = FactoryGirl.create(:manager)
 	  	job_application = FactoryGirl.create(:job_application)
 	    visit "/users/sign_in"
 
@@ -297,7 +250,7 @@ describe "Admins" do
 
 	    click_button "Forward to manager"
 
-	    page.should have_content("Assigned #{moderator.fullname}")
+	    page.should have_content("Assigned #{manager.fullname}")
 	    job_application.reload
 	    assert_equal job_application.state, "manager_review"
 	end

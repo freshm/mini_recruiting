@@ -1,0 +1,45 @@
+<div class="row">
+  <%= render "admin/sidebar" %>
+  <div class="col-md-10">
+    <div class="page-header">
+      <h1>Application from <%= @job_assignment.job_application.user.fullname %> for <%= @job_assignment.job_application.vacancy.title %></h1>
+    </div>
+
+        <dl class="dl-horizontal">
+          <dt>Firstname:</dt>
+          <dd><%= link_to @job_assignment.job_application.user.firstname, admin_user_path(@job_assignment.job_application.user), style: "text-decoration: underline;" %></dd>
+
+          <dt>Lastname:</dt>
+          <dd><%= @job_assignment.job_application.user.lastname %></dd>
+
+          <dt>Email:</dt>
+          <dd><%= @job_assignment.job_application.user.email %></dd>
+
+          <dt>Applied at:</dt>
+          <dd><%= i18n_date(@job_assignment.job_application.created_at) %></dd>
+
+          <dt>Offered salary:</dt>
+          <dd><%= @job_assignment.job_application.salary %></dd>
+
+          <dt>Note by applicant:</dt>
+          <dd><%= @job_assignment.job_application.note %></dd>
+
+          <% if !current_user.admin? %>
+            <div class="col-md-offset-5">
+              <%= link_to rate_application_good_path(@job_assignment.job_application), id: "rate_as_good_#{@job_assignment.job_application.user.email}_#{@job_assignment.job_application.vacancy.title}" do %>
+              <span class="icon-thumbs-up"></span>
+              <% end %>
+              <%= link_to rate_application_bad_path(@job_assignment.job_application), id: "rate_as_bad_#{@job_assignment.job_application.user.email}_#{@job_assignment.job_application.vacancy.title}" do %>
+              <span class="icon-thumbs-down"></span>
+              <% end %>
+            </div>
+          <% end %>
+        </dl>
+
+    <br />
+    <%= link_to admin_job_applications_path, class: "text-center btn btn-lg btn-info back col-md-offset-1"  do %>
+    <span class="icon-arrow-left"></span>
+    Back
+    <% end %>
+  </div>
+</div>

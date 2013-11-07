@@ -6,6 +6,10 @@ module ApplicationHelper
       false
     end
   end
+
+  def admin_controller?(controller)
+    controller == 'admin/users' or controller == 'admin/vacancies' or controller == 'admin/job_applications' or controller == 'admin/job_assignments'
+  end
   
   def i18n_date(date)
      if request.env['HTTP_ACCEPT_LANGUAGE'].scan(/^[a-z]{2}/).first == "de" || "no" || "se"

@@ -17,13 +17,13 @@ FactoryGirl.define do
       f.password_confirmation "testpass"
    end
 
-   factory :moderator do |f|
-      f.sequence(:email) { |n| "foomoderator#{n}@moderator.com" }
+   factory :manager do |f|
+      f.sequence(:email) { |n| "foomanager#{n}@manager.com" }
       f.firstname "SomeoneM"
       f.lastname "Here"
       f.password "testpass"
       f.password_confirmation "testpass"
-      f.type "Moderator"
+      f.type "Manager"
    end
 
    factory :user do |f|
@@ -51,7 +51,7 @@ FactoryGirl.define do
    end
 
    factory :job_assignment do |f|
-      moderator
+      manager
       job_application
    end
 end

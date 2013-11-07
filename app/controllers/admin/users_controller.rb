@@ -3,7 +3,9 @@ class Admin::UsersController < ApplicationController
   # GET /users
   # GET /users.json
   def index
-    @users = User.order('type asc')
+    sort_order = ["Admin", "Moderator", "Applicant"]
+    @users = User.all
+
 
     respond_to do |format|
       format.html # index.html.erb
@@ -30,6 +32,7 @@ class Admin::UsersController < ApplicationController
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @user }
+      format.js
     end
   end
 
@@ -47,9 +50,11 @@ class Admin::UsersController < ApplicationController
       if @user.save
         format.html { redirect_to admin_root_path, notice: 'User was successfully created.' }
         format.json { render json: @user, status: :created, location: @user }
+        format.js
       else
         format.html { render action: "new" }
         format.json { render json: @user.errors, status: :unprocessable_entity }
+        format.js { render "new"}
       end
     end
   end
@@ -94,20 +99,7 @@ class Admin::UsersController < ApplicationController
     respond_to do |format|
       format.html { redirect_to admin_root_path }
       format.json { head :no_content }
+      format.js
     end
-  end
-
-  def promote_to_moderator
-    @user = User.find(params[:id])
-    @user.type = "Moderator"
-    @user.save!
-    redirect_to admin_root_path, notice: "#{@user.fullname} was granted Moderator privileges."
-  end
-
-  def demote_to_applicant
-    @user = User.find(params[:id])
-    @user.type = "Applicant"
-    @user.save!
-    redirect_to admin_root_path, notice: "#{@user.fullname} Moderator privileges were withdrawn."
   end
 end

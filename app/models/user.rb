@@ -22,4 +22,9 @@ class User < ActiveRecord::Base
   def to_s
     self.fullname
   end
+
+private
+  def mass_assignment_authorizer(role = :default)
+      super + [:type]
+  end
 end

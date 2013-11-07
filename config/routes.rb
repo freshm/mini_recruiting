@@ -19,10 +19,9 @@ MiniRecruiting::Application.routes.draw do
   
   namespace :admin do
     resources :users
-    get "users/promote_to_moderator/:id" , to: "users#promote_to_moderator", as: "promote_to_moderator"
-    get "users/demote_to_applicant/:id" , to: "users#demote_to_applicant", as: "demote_to_applicant"
     resources :vacancies
     resources :job_applications
+    resources :job_assignments, only: :show
     root :to => 'users#index'
     get "vacancies/:id/pdf" , to: "vacancies#new_pdf", as: "vacancy_pdf"
     post "vacancies/:id/g_pdf" , to: "vacancies#generate_pdf", as: "vacancy_g_pdf"

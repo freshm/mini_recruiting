@@ -1,0 +1,26 @@
+function scrollToElement(selector, time, verticalOffset) {
+    time = typeof(time) != 'undefined' ? time : 1000;
+    verticalOffset = typeof(verticalOffset) != 'undefined' ? verticalOffset : 0;
+    element = $(selector);
+    offset = element.offset();
+    offsetTop = offset.top + verticalOffset;
+    $('html, body').animate({
+        scrollTop: offsetTop
+    }, time);
+}
+
+function sleep(milliseconds) {
+  var start = new Date().getTime();
+  for (var i = 0; i < 1e7; i++) {
+    if ((new Date().getTime() - start) > milliseconds){
+      break;
+    }
+  }
+}
+
+$("#new_link_top").show();
+$("#new_link_bottom").show();
+scrollToElement("table");
+$("#new_vacancy_container").remove();
+$( "tr:last" ).after("<%= j render(@vacancy) %>");
+scrollToElement("vacancy_#{@vacancy.id}");

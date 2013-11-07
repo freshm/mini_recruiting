@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131030134720) do
+ActiveRecord::Schema.define(:version => 20131107082610) do
 
   create_table "admins", :force => true do |t|
     t.datetime "created_at", :null => false
@@ -34,7 +34,7 @@ ActiveRecord::Schema.define(:version => 20131030134720) do
   end
 
   create_table "job_assignments", :force => true do |t|
-    t.integer  "moderator_id"
+    t.integer  "manager_id"
     t.integer  "job_application_id"
     t.datetime "created_at",                            :null => false
     t.datetime "updated_at",                            :null => false
@@ -42,7 +42,7 @@ ActiveRecord::Schema.define(:version => 20131030134720) do
   end
 
   add_index "job_assignments", ["job_application_id"], :name => "index_job_assignments_on_job_application_id"
-  add_index "job_assignments", ["moderator_id"], :name => "index_job_assignments_on_moderator_id"
+  add_index "job_assignments", ["manager_id"], :name => "index_job_assignments_on_moderator_id"
 
   create_table "users", :force => true do |t|
     t.string   "firstname"

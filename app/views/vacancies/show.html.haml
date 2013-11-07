@@ -17,24 +17,26 @@
   %dt Requirement:
   %dd= @vacancy.requirement
 
-- if !admin_signed_in?
-  - if user_signed_in? && !@vacancy.already_taken_by_user?(current_user)
+- if can_apply?(current_user)
+  - if user_signed_in?
+    - if @vacancy.already_taken_by_user?(current_user)
+      %br
+      %hr
+      %h2 You already applied for this vacancy
+      %h4 Your details for this vacancy are:
+      %p Salary offer: #{@vacancy.display_user_details(current_user)[0]}
+      %p Note:
+      %blockquote
+        %p #{@vacancy.display_user_details(current_user)[1]}
+      = link_to "Want to change the details?", edit_applicant_job_application_path(current_user.id, @vacancy.display_user_details(current_user)[2]), class: "btn btn-danger"
+      = link_to "Back", root_path, class: "btn btn-warning"
+    - else
+      %br
+      .col-md-offset-1
+        = link_to "Apply now!", new_vacancy_job_application_path(@vacancy), class: "btn btn-primary"
+        = link_to "Back", :back, class: "btn btn-warning"
+  - else
     %br
-    .col-md-offset-1
-      = link_to "Apply now!", new_vacancy_job_application_path(@vacancy), class: "btn btn-primary"
-      = link_to "Back", :back, class: "btn btn-warning"
-  - elsif !user_signed_in?
     .col-md-offset-1
       = link_to "Apply now!", guest_new_path(@vacancy), class: "btn btn-primary"
       = link_to "Back", :back, class: "btn btn-warning"
-  - else
-    %br
-    %hr
-    %h2 You already applied for this vacancy
-    %h4 Your details for this vacancy are:
-    %p Salary offer: #{@vacancy.display_user_details(current_user)[0]}
-    %p Note:
-    %blockquote
-      %p #{@vacancy.display_user_details(current_user)[1]}
-    = link_to "Want to change the details?", edit_applicant_job_application_path(current_user.id, @vacancy.display_user_details(current_user)[2]), class: "btn btn-danger"
-    = link_to "Back", root_path, class: "btn btn-warning"

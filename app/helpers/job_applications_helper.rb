@@ -1,7 +1,7 @@
 module JobApplicationsHelper
 	def reviewed_by?(job_application)
 		if JobAssignment.find_by_job_application_id(job_application.id)
-			JobAssignment.find_by_job_application_id(job_application.id).moderator.fullname
+			JobAssignment.find_by_job_application_id(job_application.id).manager.fullname
 		else
 			"Not assigned."
 		end 

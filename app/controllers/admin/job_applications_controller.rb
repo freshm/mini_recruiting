@@ -4,29 +4,14 @@ class Admin::JobApplicationsController < ApplicationController
   # GET /job_applications
   # GET /job_applications.json
   def index
-    @vacancies = Vacancy.all(include: :job_applications)
-    @job_assignments = JobAssignment.where(moderator_id: current_user.id, reviewed: false)
-    @job_assignments_vacancy = {}
-
-    @job_assignments.each do |j|
-      if @job_assignments_vacancy[j.job_application.vacancy.title] == nil
-        @job_assignments_vacancy[j.job_application.vacancy.title]  = 1
-      else
-        @job_assignments_vacancy[j.job_application.vacancy.title] += 1
-      end
-    end
-
-    respond_to do |format|
-      format.html # index.html.erb
-      format.json { render json: @job_applications }
-    end
+    @vacancies = Vacancy.all
+    @job_assignments = JobAssignment.where(manager_id: current_user.id, reviewed: false)
   end
 
   # GET /job_applications/1
   # GET /job_applications/1.json
   def show
     @vacancy = Vacancy.find(params[:id])
-    @job_applications = JobApplication.where(vacancy_id: @vacancy.id)
     @new = JobApplication.where(state: "send", vacancy_id: @vacancy.id).includes(:user)
     @forwarded = JobApplication.where(state: "manager_review", vacancy_id: @vacancy.id).includes(:user)
     @reviewed = JobApplication.where(state: "manager_review_listed", vacancy_id: @vacancy.id).includes(:user)
@@ -116,7 +101,7 @@ class Admin::JobApplicationsController < ApplicationController
     ApplicationNotifier.reviewed_application(current_user, vacancy, @job_application.user).deliver
 
 
-    redirect_to admin_job_application_path(vacancy.id), notice: "Reviewed the application from #{@job_application.user.fullname} for #{@job_application.vacancy.title}"
+    redirect_to admin_job_applications_path, notice: "Reviewed the application from #{@job_application.user.fullname} for #{@job_application.vacancy.title} as good"
   end
 
   def rate_as_bad
@@ -126,9 +111,9 @@ class Admin::JobApplicationsController < ApplicationController
     assignment = JobAssignment.find_by_job_application_id(@job_application.id)
     assignment.reviewed = true
     assignment.save
-    ApplicationNotifier.reviewed_application(current_user, vacancy, @job_application.user).deliver
+    ApplicationNotifier.bad_reviewed_application(current_user, vacancy, @job_application.user).deliver
 
-    redirect_to admin_job_application_path(vacancy.id), notice: "Reviewed the application from #{@job_application.user.fullname} for #{@job_application.vacancy.title}"
+    redirect_to admin_job_applications_path , notice: "Reviewed the application from #{@job_application.user.fullname} for #{@job_application.vacancy.title} as bad"
   end
 
   def reject
