@@ -1,0 +1,21 @@
+if ($("#h_rejected")) {
+	$("#h_rejected").remove();
+}
+
+$("#user_<%= @job_application.user.id %>").appendTo($(".accordion_rejected"));
+
+<%# Checks which state the application had
+ and decrement the tab amount accordingly  %>
+if ("<%= @state %>" == "send") {
+	var amount = parseInt($("#tab_1").text());
+	amount--
+	$("#tab_1").text(amount);
+} else {
+	var amount = parseInt($("#tab_3").text());
+	amount--
+	$("#tab_3").text(amount);
+}
+
+var amount = parseInt($("#tab_5").text());
+amount++
+$("#tab_5").text(amount);

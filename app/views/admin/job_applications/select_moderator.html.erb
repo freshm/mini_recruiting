@@ -6,12 +6,15 @@
 		</div>
 		<%= semantic_form_for(@assignment) do |f| %>
 			<%= f.inputs do %>
-				<%= f.input :manager, :include_blank => false %>
+				<div class="input-group">
+					<%= f.input :manager, :include_blank => false, input_html: { class: "form-control" } %>
+				</div>
 				<%= f.input :job_application, as: :hidden, input_html: { value: @job_application.id } %>
 			<% end %>
 			<br />
 			<%= f.actions do %>
 				<%= f.action :submit, as: :button, label: "Forward to manager", button_html: { class: "btn btn-info" } %>
+				<%= link_to "Back", :back, class: "btn btn-warning" %>
 			<% end %>
 		<% end %>
 	</div>

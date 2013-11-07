@@ -1,6 +1,5 @@
-<div class="panel-group" id="accordion">
   <% tab.each_with_index do |job_application, index| %>
-  <div class="panel panel-default">
+  <div class="panel panel-default" id="user_<%= job_application.user.id%>">
     <div class="panel-heading text-center">
       <h4 class="panel-title">
         <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapse<%= "#{job_application.state}#{index}" %>">
@@ -30,19 +29,11 @@
           <dd><%= job_application.note %></dd>
 
           <% if !current_user.admin? %>
-            <div class="pull-right">
-              <%= link_to rate_application_good_path(job_application), id: "rate_as_good_#{job_application.user.email}_#{job_application.vacancy.title}" do %>
-              <span class="icon-thumbs-up"></span>
-              <% end %>
-              <%= link_to rate_application_bad_path(job_application), id: "rate_as_bad_#{job_application.user.email}_#{job_application.vacancy.title}" do %>
-              <span class="icon-thumbs-down"></span>
-              <% end %>
-            </div>
           <% else %>
             <% if send?(job_application) %>
               <div class="pull-right new-option">
                 <%= link_to "Forward", select_moderator_path(job_application), class: "icon-tags" %>
-                <%= link_to "Reject", reject_application_path(job_application), class: "icon-trash", id: "reject_#{job_application.id}" %>
+                <%= link_to "Reject", reject_application_path(job_application), class: "icon-trash", id: "reject_#{job_application.id}", remote: true %>
               </div>
             <% elsif forwarded?(job_application) %>
               <div class="pull-right new-option">
@@ -55,7 +46,7 @@
                 <p><%= reviewed_by?(job_application) %></p>
                 <br />
                 <%= link_to "Employ", employ_path(job_application), class: "icon-check", id: "employ_#{job_application.id}"  %>
-                <%= link_to "Reject", reject_application_path(job_application), class: "icon-trash", id: "reject_#{job_application.id}" %>
+                <%= link_to "Reject", reject_application_path(job_application), class: "icon-trash", id: "reject_#{job_application.id}", remote: true %>
               </div>
             <% end %>
           <% end %>
@@ -65,4 +56,3 @@
   </div>
 
   <% end %>
-</div>

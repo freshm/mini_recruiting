@@ -5,11 +5,6 @@ class Admin::JobApplicationsController < ApplicationController
   # GET /job_applications.json
   def index
     if current_user.admin?
-      @state = params[:state]
-
-      if @state == ""
-        @state = "send"
-      end
       @new = JobApplication.where(state: @state)
       @vacancies = Vacancy.all
     else
@@ -133,11 +128,15 @@ class Admin::JobApplicationsController < ApplicationController
   def reject
     @job_application = JobApplication.find(params[:id])
     vacancy = @job_application.vacancy
+    @state = @job_application.state
     @job_application.reject
     @job_application.save!
     ApplicationNotifier.rejected_application(vacancy, @job_application.user).deliver
 
-    redirect_to admin_job_application_path(vacancy.id), notice: "Rejected the application from #{@job_application.user.fullname} for #{@job_application.vacancy.title}"
+    respond_to do |format|
+      format.html {redirect_to admin_job_application_path(vacancy.id), notice: "Rejected the application from #{@job_application.user.fullname} for #{@job_application.vacancy.title}"}
+      format.js
+    end
   end
 
   def employ

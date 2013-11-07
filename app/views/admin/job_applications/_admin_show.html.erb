@@ -6,69 +6,59 @@
     </div>
     <div id="tabs">
       <ul>
-        <li>
-          <a href="#tabs-1">
-            <span class="badge pull-right"><%= @new.count %></span>
-            Newly send
-          </a>
-        </li>
-        <li>
-          <a href="#tabs-2">
-            <span class="badge pull-right"><%= @forwarded.count %></span>
-            Forwarded to manager
-          </a>
-        </li>
-        <li>
-          <a href="#tabs-3">
-            <span class="badge pull-right"><%= @reviewed.count %></span>
-            Reviewed by manager
-          </a>
-        </li>
-        <li>
-          <a href="#tabs-4">
-            <span class="badge pull-right"><%= @employed.count %></span>
-            Employed
-          </a>
-        </li>
-        <li><a href="#tabs-5">Rejected</a></li>
+        <%= render :partial => "tabs", :locals => { :state => @new, text: "New", index: 1} %>
+        <%= render :partial => "tabs", :locals => { :state => @forwarded, text: "Forwarded to Manager", index: 2} %>
+        <%= render :partial => "tabs", :locals => { :state => @reviewed, text: "Reviewed by Manager", index: 3} %>
+        <%= render :partial => "tabs", :locals => { :state => @employed, text: "Employed", index: 4} %>
+        <%= render :partial => "tabs", :locals => { :state => @rejected, text: "Rejected", index: 5} %>
       </ul>
       <div id="tabs-1">
+        <div class="panel-group accordion_send" id="accordion">
         <% if @new.any? %>
         <%= render :partial => "accordion_content", :locals => { :tab => @new } %>
         <% else %>
-        <h4>There are no new applications.</h4>
+        <h4 id="h_new">There are no new applications.</h4>
         <% end %>
+        </div>
       </div>
       <div id="tabs-2">
+        <div class="panel-group accordion_forwarded" id="accordion">
         <% if @forwarded.any? %>
         <%= render :partial => "accordion_content", :locals => { :tab => @forwarded } %>
         <% else %>
-        <h4>There are currently no applications reviewed by a manager.</h4>
+        <h4 id="h_forwarded">There are currently no applications reviewed by a manager.</h4>
         <% end %>
+        </div>
       </div>
 
       <div id="tabs-3">
+        <div class="panel-group accordion_reviewed" id="accordion">
         <% if @reviewed.any? %>
         <%= render :partial => "accordion_content", :locals => { :tab => @reviewed } %>
         <% else %>
-        <h4>There are no reviewed applications.</h4>
+        <h4 id="h_reviewed">There are no reviewed applications.</h4>
         <% end %>
+        </div>
       </div>
 
       <div id="tabs-4">
+        <div class="panel-group accordion_employed" id="accordion">
         <% if @employed.any? %>
         <%= render :partial => "accordion_content", :locals => { :tab => @employed } %>
         <% else %>
-        <h4>There was no one employed, yet.</h4>
+        <h4 id="h_employed">There was no one employed, yet.</h4>
         <% end %>
+        </div>
       </div>
 
       <div id="tabs-5">
+        <div class="panel-group accordion_rejected" id="accordion">
         <% if @rejected.any? %>
         <%= render :partial => "accordion_content", :locals => { :tab => @rejected } %>
         <% else %>
-        <h4>There are no rejected applications.</h4>
+        <h4 id="h_rejected">There are no rejected applications.</h4>
         <% end %>
+        </div>
       </div>
     </div>
 
