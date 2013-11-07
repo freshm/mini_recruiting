@@ -1,8 +1,16 @@
-if ($("#h_rejected")) {
-	$("#h_rejected").remove();
+$(".alert").remove();
+$(".page-header").after("<div class=\"alert alert-success alert-dismissable\"><button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-hidden=\"true\">&times;</button>Rejected the application from <%= @job_application.user.fullname %> for <%= @job_application.vacancy.title %>").slideDown();
+
+var rejected = "#h_rejected"
+if ($(rejected)) {
+	$(rejected).remove();
 }
 
-$("#user_<%= @job_application.user.id %>").appendTo($(".accordion_rejected"));
+<%# Grabs the rejected Applicant div and puts it to rejected %>
+var user = $("#user_<%= @job_application.user.id %>");
+user.appendTo($(".accordion_rejected"));
+user.find($(".new-option")).remove();
+user.collapse();
 
 <%# Checks which state the application had
  and decrement the tab amount accordingly  %>
@@ -16,6 +24,7 @@ if ("<%= @state %>" == "send") {
 	$("#tab_3").text(amount);
 }
 
+<%# Increments the amount of the Rejected Tab%>
 var amount = parseInt($("#tab_5").text());
 amount++
 $("#tab_5").text(amount);

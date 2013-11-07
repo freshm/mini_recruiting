@@ -14,11 +14,11 @@
       </ul>
       <div id="tabs-1">
         <div class="panel-group accordion_send" id="accordion">
-        <% if @new.any? %>
-        <%= render :partial => "accordion_content", :locals => { :tab => @new } %>
-        <% else %>
-        <h4 id="h_new">There are no new applications.</h4>
-        <% end %>
+          <% if @new.any? %>
+          <%= render :partial => "accordion_content", :locals => { :tab => @new } %>
+          <% else %>
+          <h4 id="h_new">There are no new applications.</h4>
+          <% end %>
         </div>
       </div>
       <div id="tabs-2">
