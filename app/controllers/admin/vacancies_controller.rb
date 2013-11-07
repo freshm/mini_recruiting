@@ -3,7 +3,7 @@ class Admin::VacanciesController < ApplicationController
   # GET /admin/vacancies
   # GET /admin/vacancies.json
   def index
-    @vacancies = Vacancy.all
+    @vacancies = Vacancy.page(params[:page]).per(30)
 
     respond_to do |format|
       format.html # index.html.erb

@@ -62,3 +62,4 @@ gem 'slim-rails'
 gem 'state_machine'
 gem 'pdfkit'
 gem 'bullet', group: :development
+gem 'kaminari'

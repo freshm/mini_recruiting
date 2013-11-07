@@ -4,7 +4,7 @@ class Admin::UsersController < ApplicationController
   # GET /users.json
   def index
     sort_order = ["Admin", "Moderator", "Applicant"]
-    @users = User.all
+    @users = User.order("type asc").page(params[:page]).per(30)
 
 
     respond_to do |format|
