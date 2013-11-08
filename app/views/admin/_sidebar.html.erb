@@ -9,7 +9,7 @@
 <% elsif moderator_signed_in? %>
 	<div class="col-md-2">
 	    <ul class="nav nav-pills nav-stacked admin-list">
-	      <li class="<%= 'active' if params[:controller] == 'admin/job_applications' %>"><%= link_to "Job Applications", admin_job_applications_path %></li>
+	      <li class="<%= 'active' if params[:controller] == 'admin/job_applications' || params[:controller] == 'admin/job_assignments'%>"><%= link_to "Job Applications", admin_job_applications_path %></li>
 	    </ul>
 	</div>
 <% end %>

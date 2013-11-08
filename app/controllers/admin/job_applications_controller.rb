@@ -146,8 +146,11 @@ class Admin::JobApplicationsController < ApplicationController
     @job_application.save!
     ApplicationNotifier.accepted_application(vacancy, @job_application.user).deliver
     # ApplicationNotifier.accepted_application_moderator(vacancy, @job_application.user).deliver
-
-    redirect_to admin_job_application_path(vacancy.id), notice: "Employed #{@job_application.user.fullname} for #{@job_application.vacancy.title}"
+    
+    respond_to do |format|
+      format.html { redirect_to admin_job_application_path(vacancy.id), notice: "Employed #{@job_application.user.fullname} for #{@job_application.vacancy.title}" }
+      format.js
+    end
   end
 
   def select_moderator

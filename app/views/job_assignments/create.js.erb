@@ -12,7 +12,7 @@ user.appendTo($(".accordion_forwarded"));
 user.find($(".new-option")).replaceWith("<div class=\"pull-right new-option\"><h3>Reviewed by</h3><p><%= reviewed_by?(@assignment.job_application) %></p></div>");
 user.collapse();
 
-<%# DEcrements the amount of the New Tab%>
+<%# Decrements the amount of the New Tab%>
 var amount = parseInt($("#tab_1").text());
 amount--;
 $("#tab_1").text(amount);

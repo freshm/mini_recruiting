@@ -15,16 +15,23 @@ user.collapse();
 <%# Checks which state the application had
  and decrement the tab amount accordingly  %>
 if ("<%= @state %>" == "send") {
-	var amount = parseInt($("#tab_1").text());
-	amount--
-	$("#tab_1").text(amount);
+	var amount_first_tab = parseInt($("#tab_1").text());
+	amount_first_tab--
+	$("#tab_1").text(amount_first_tab);
+	if (amount_first_tab == 0) {
+		$(".accordion_send").append("<h4 id=\"h_reviewed\">There are no new applications.</h4>");
+	}
+
 } else {
-	var amount = parseInt($("#tab_3").text());
-	amount--
-	$("#tab_3").text(amount);
+	var amount_first_tab = parseInt($("#tab_3").text());
+	amount_first_tab--
+	$("#tab_3").text(amount_first_tab);
+	if (amount_first_tab == 0) {
+		$(".accordion_reviewed").append("<h4 id=\"h_reviewed\">There are no reviewed applications.</h4>");
+	}
 }
 
 <%# Increments the amount of the Rejected Tab%>
-var amount = parseInt($("#tab_5").text());
-amount++
-$("#tab_5").text(amount);
+var amount_new_tab = parseInt($("#tab_5").text());
+amount_new_tab++
+$("#tab_5").text(amount_new_tab);
