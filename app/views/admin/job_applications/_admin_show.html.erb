@@ -13,7 +13,7 @@
         <%= render :partial => "tabs", :locals => { :state => @rejected, text: "Rejected", index: 5} %>
       </ul>
       <div id="tabs-1">
-        <div class="panel-group accordion_send" id="accordion">
+        <div class="panel-group accordion accordion_send" id="accordion_<%= @new.object_id %>">
           <% if @new.any? %>
           <%= render :partial => "accordion_content", :locals => { :tab => @new } %>
           <% else %>
@@ -22,7 +22,7 @@
         </div>
       </div>
       <div id="tabs-2">
-        <div class="panel-group accordion_forwarded" id="accordion">
+        <div class="panel-group accordion_forwarded" id="accordion_<%= @forwarded.object_id %>">
         <% if @forwarded.any? %>
         <%= render :partial => "accordion_content", :locals => { :tab => @forwarded } %>
         <% else %>
@@ -32,7 +32,7 @@
       </div>
 
       <div id="tabs-3">
-        <div class="panel-group accordion_reviewed" id="accordion">
+        <div class="panel-group accordion_reviewed" id="accordion_<%= @reviewed.object_id %>">
         <% if @reviewed.any? %>
         <%= render :partial => "accordion_content", :locals => { :tab => @reviewed } %>
         <% else %>
@@ -42,7 +42,7 @@
       </div>
 
       <div id="tabs-4">
-        <div class="panel-group accordion_employed" id="accordion">
+        <div class="panel-group accordion_employed" id="accordion_<%= @employed.object_id %>">
         <% if @employed.any? %>
         <%= render :partial => "accordion_content", :locals => { :tab => @employed } %>
         <% else %>
@@ -52,7 +52,7 @@
       </div>
 
       <div id="tabs-5">
-        <div class="panel-group accordion_rejected" id="accordion">
+        <div class="panel-group accordion_rejected" id="accordion_<%= @rejected.object_id %>">
         <% if @rejected.any? %>
         <%= render :partial => "accordion_content", :locals => { :tab => @rejected } %>
         <% else %>

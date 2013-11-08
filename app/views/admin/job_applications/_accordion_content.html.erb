@@ -2,7 +2,7 @@
   <div class="panel panel-default" id="user_<%= job_application.user.id%>">
     <div class="panel-heading text-center">
       <h4 class="panel-title">
-        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapse<%= "#{job_application.state}#{index}" %>">
+        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion_<%= tab.object_id %>" href="#collapse<%= "#{job_application.state}#{index}" %>">
           <%= job_application.user.fullname %>
         </a>
       </h4>

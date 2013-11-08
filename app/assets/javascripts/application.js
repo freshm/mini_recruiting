@@ -22,7 +22,8 @@ $( document ).ready ( function() {
 	$(".delete").tooltip();
 	$(".applicant").tooltip();
 	$(".moderator").tooltip();
-	$( "#tabs" ).tabs();
+	$("#tabs").tabs();
+	//$(".accordion").accordion({ collapsible: true, header: "h3" });
 
 
 	$("#vacancy_new_close").on("click", function() {
