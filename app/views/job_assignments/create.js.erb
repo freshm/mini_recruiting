@@ -2,9 +2,9 @@ $(".alert").remove();
 $(".select-manager").remove();
 $(".page-header").after("<div class=\"alert alert-success alert-dismissable\"><button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-hidden=\"true\">&times;</button>Assigned <%= @assignment.manager.fullname %>").slideDown();
 
-var rejected = "#h_forwarded"
-if ($(rejected)) {
-	$(rejected).remove();
+var forwarded = "#h_forwarded"
+if ($(forwarded)) {
+	$(forwarded).remove();
 }
 
 var user = $("#user_<%= @assignment.job_application.user.id %>");
@@ -13,11 +13,15 @@ user.find($(".new-option")).replaceWith("<div class=\"pull-right new-option\"><h
 user.collapse();
 
 <%# Decrements the amount of the New Tab%>
-var amount = parseInt($("#tab_1").text());
-amount--;
-$("#tab_1").text(amount);
+var amount_first_tab = parseInt($("#tab_1").text());
+amount_first_tab--;
+$("#tab_1").text(amount_first_tab);
+
+if (amount_first_tab == 0) {
+	$(".accordion_send").append("<h4 id=\"h_reviewed\">There are no new applications.</h4>");
+}
 
 <%# Increments the amount of the Forwarded Tab%>
-var amount = parseInt($("#tab_2").text());
-amount++;
-$("#tab_2").text(amount);
+var amount_new_tab = parseInt($("#tab_2").text());
+amount_new_tab++;
+$("#tab_2").text(amount_new_tab);

@@ -7,8 +7,20 @@ module ApplicationHelper
     end
   end
 
-  def admin_controller?(controller)
-    controller == 'admin/users' or controller == 'admin/vacancies' or controller == 'admin/job_applications' or controller == 'admin/job_assignments'
+  def admin_controller?
+    params[:controller] == 'admin/users' or params[:controller] == 'admin/vacancies' or params[:controller] == 'admin/job_applications' or params[:controller] == 'admin/job_assignments'
+  end
+
+  def user_edit_controller?
+    params[:controller] == 'devise/registrations'
+  end
+
+  def login_controller?
+    params[:controller] == 'sessions'
+  end
+  
+  def sign_up_controller?
+    params[:controller] == 'applicant_registrations'
   end
   
   def i18n_date(date)

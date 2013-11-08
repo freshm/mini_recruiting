@@ -1,3 +1,10 @@
 $(".select-manager").remove();
 
-$("#user_<%= @job_application.user.id %> .new-option").after("<br/><%= j render 'select_moderator' %>");
+$("#user_<%= @job_application.user.id %> .new-option").after("<%= j render 'select_moderator' %>");
+
+$("#user_<%= @job_application.user.id %> .new-option").hide();
+
+$(".close-container").on("click", function() {
+	$(".select-manager").remove();
+	$("#user_<%= @job_application.user.id %> .new-option").show();
+});
