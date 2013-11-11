@@ -1,5 +1,21 @@
+$(".alert").remove();
 $("#new_user_container").remove();
 $("#new_user_top").show();
 $("#new_user_bottom").show();
 
+$(".page-header").after("<div class=\"alert alert-success alert-dismissable\">"
+	+" <button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-hidden=\"true\">&times;</button><%= @user.type %> was successfully created.").slideDown();
+
+<% if User.where(type: @user.type).any? %>
 $(".<%= @user.type %>:last").after("<%= j render(@user) %>");
+
+<% elsif @user.type == "Applicant" %>
+$(".Admin:last").after("<%= j render(@user) %>");
+
+<% elsif @user.type == "Moderator" %>
+	<% if User.where(type: "Applicant").any? %>
+	$(".Applicant:last").after("<%= j render(@user) %>");
+	<% else %>
+	$(".Admin:last").after("<%= j render(@user) %>");
+	<% end %>
+<% end %>

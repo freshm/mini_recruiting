@@ -1,12 +1,14 @@
 $(".alert").remove();
 $(".page-header").after("<div class=\"alert alert-success alert-dismissable\"><button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-hidden=\"true\">&times;</button>Employed <%= @job_application.user.fullname %> for <%=@job_application.vacancy.title %>").slideDown();
-var reviewed = "#h_reviewed"
-if ($(reviewed)) {
-	$(reviewed).remove();
+var employed = "#h_employed"
+if ($(employed)) {
+	$(employed).remove();
 }
 
 var user = $("#user_<%= @job_application.user.id %>");
 user.appendTo($(".accordion_employed"));
+var object_id = $(".accordion_employed").attr('id');
+user.find("a").attr("data-parent", object_id)
 user.find($(".new-option")).remove();
 user.collapse();
 

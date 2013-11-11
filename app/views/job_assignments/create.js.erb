@@ -9,6 +9,8 @@ if ($(forwarded)) {
 
 var user = $("#user_<%= @assignment.job_application.user.id %>");
 user.appendTo($(".accordion_forwarded"));
+var object_id = $(".accordion_forwarded").attr('id');
+user.find("a").attr("data-parent", object_id)
 user.find($(".new-option")).replaceWith("<div class=\"pull-right new-option\"><h3>Reviewed by</h3><p><%= reviewed_by?(@assignment.job_application) %></p></div>");
 user.collapse();
 

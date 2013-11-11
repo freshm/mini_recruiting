@@ -18,8 +18,11 @@ function sleep(milliseconds) {
   }
 }
 
+$(".alert").remove();
 $("#new_link_top").show();
 $("#new_link_bottom").show();
+$(".page-header").after("<div class=\"alert alert-success alert-dismissable\">"
+  +" <button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-hidden=\"true\">&times;</button>Vacancy was successfully created.").slideDown();
 scrollToElement("table");
 $("#new_vacancy_container").remove();
 $( "tr:last" ).after("<%= j render(@vacancy) %>");
