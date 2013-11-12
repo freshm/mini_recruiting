@@ -8,43 +8,40 @@ div.row
         | &nbsp Add Vacancy
     br
     br
-    - if @vacancies.any?
-      = paginate @vacancies
-      table-responsive
-        table.table.table-striped.table-bordered.table-hover
-          thead
-            th.text-center Title
-            th.text-center Location
-            th.text-center Description
-            th.text-center Requirement
-            th.text-center Actions
-          tbody
-            tr
-              = content_tag_for(:tr, @vacancies) do |vacancy|
-                td= vacancy.title
-                td= vacancy.location
-                td= vacancy.description
-                td= vacancy.requirement
-                td.text-center.inline
-                  = link_to "", admin_vacancy_path(vacancy), class: "icon-eye-open eye",              \
-                                                             title: "Show",                           \
-                                                             data: { toggle: "tooltip",               \
-                                                                     placement: "top" }
-                  | &nbsp;
-                  = link_to "", edit_admin_vacancy_path(vacancy), class: "icon-edit edit",            \
-                                                                  title: "Edit",                      \
-                                                                  data: { toggle: "tooltip",          \
-                                                                          placement: "top" }
-                  | &nbsp;
-                  = link_to "", admin_vacancy_path(vacancy), class: "icon-trash delete",              \
-                                                             id: "delete_#{vacancy.title}",           \
-                                                             title: "Delete",                         \
-                                                             remote: true,                            \
-                                                             method: :delete,                         \
-                                                             data: { toggle: "tooltip",               \
-                                                                     confirm: "Are you sure?",        \
-                                                                     placement: "top" }
-    - else
-      h2 There are no vacancies yet.
+    = paginate @vacancies
+    table-responsive
+      table.table.table-striped.table-bordered.table-hover
+        thead
+          th.text-center Title
+          th.text-center Location
+          th.text-center Description
+          th.text-center Requirement
+          th.text-center Actions
+        tbody
+          tr
+            = content_tag_for(:tr, @vacancies) do |vacancy|
+              td= vacancy.title
+              td= vacancy.location
+              td= vacancy.description
+              td= vacancy.requirement
+              td.text-center.inline
+                = link_to "", admin_vacancy_path(vacancy), class: "icon-eye-open eye",              \
+                                                           title: "Show",                           \
+                                                           data: { toggle: "tooltip",               \
+                                                                   placement: "top" }
+                | &nbsp;
+                = link_to "", edit_admin_vacancy_path(vacancy), class: "icon-edit edit",            \
+                                                                title: "Edit",                      \
+                                                                data: { toggle: "tooltip",          \
+                                                                        placement: "top" }
+                | &nbsp;
+                = link_to "", admin_vacancy_path(vacancy), class: "icon-trash delete",              \
+                                                           id: "delete_#{vacancy.title}",           \
+                                                           title: "Delete",                         \
+                                                           remote: true,                            \
+                                                           method: :delete,                         \
+                                                           data: { toggle: "tooltip",               \
+                                                                   confirm: "Are you sure?",        \
+                                                                   placement: "top" }
     = link_to new_admin_vacancy_path, id: "new_link_bottom", :class => 'btn btn-primary pull-right icon-plus-sign', remote: true do
       | &nbsp Add Vacancy
