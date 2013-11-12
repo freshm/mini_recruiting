@@ -12,7 +12,7 @@ $(".<%= @user.type %>:last").after("<%= j render(@user) %>");
 <% elsif @user.type == "Applicant" %>
 $(".Admin:last").after("<%= j render(@user) %>");
 
-<% elsif @user.type == "Moderator" %>
+<% elsif @user.type == "Manager" %>
 	<% if User.where(type: "Applicant").any? %>
 	$(".Applicant:last").after("<%= j render(@user) %>");
 	<% else %>
