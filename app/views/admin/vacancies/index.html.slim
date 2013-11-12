@@ -44,8 +44,7 @@ div.row
                                                              data: { toggle: "tooltip",               \
                                                                      confirm: "Are you sure?",        \
                                                                      placement: "top" }
-    = link_to new_admin_vacancy_path, id: "new_link_bottom", :class => 'btn btn-primary pull-right icon-plus-sign', remote: true do
-      | &nbsp Add Vacancy
     - else
       h2 There are no vacancies yet.
-    
+    = link_to new_admin_vacancy_path, id: "new_link_bottom", :class => 'btn btn-primary pull-right icon-plus-sign', remote: true do
+      | &nbsp Add Vacancy
