@@ -1,5 +1,15 @@
 .row
   =semantic_form_for @applicant, url: guest_create_path do |f|
+    - if @applicant.errors.any?
+      .alert.alert-danger.alert-dismissable
+        %button.close{"aria-hidden" => "true", "data-dismiss" => "alert", type: "button"} ×
+        %h4
+          = pluralize(@applicant.errors.count, "error")
+          prohibited this user from being saved:
+        %ul
+          - @applicant.errors.full_messages.each do |msg|
+            %li= msg
+
     .row
       .col-md-6.well
         .page-header
