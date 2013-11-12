@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131107110023) do
+ActiveRecord::Schema.define(:version => 20131112105345) do
 
   create_table "admins", :force => true do |t|
     t.datetime "created_at", :null => false
@@ -46,6 +46,12 @@ ActiveRecord::Schema.define(:version => 20131107110023) do
 
   add_index "job_assignments", ["job_application_id"], :name => "index_job_assignments_on_job_application_id"
   add_index "job_assignments", ["manager_id"], :name => "index_job_assignments_on_moderator_id"
+
+  create_table "pdf_footers", :force => true do |t|
+    t.text     "footer",     :default => "Here's a sample footer. Add your own footer here for the PDF or delete it."
+    t.datetime "created_at",                                                                                           :null => false
+    t.datetime "updated_at",                                                                                           :null => false
+  end
 
   create_table "users", :force => true do |t|
     t.string   "firstname"

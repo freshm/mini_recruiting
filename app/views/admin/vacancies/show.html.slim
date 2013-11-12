@@ -21,6 +21,12 @@ div.row
       = link_to admin_vacancy_pdf_path(@vacancy), class: "btn btn-lg btn-danger" do
         span.icon-edit
         | Generate PDF
+      | &nbsp;
+      = link_to "", edit_admin_pdf_footer_path(1), class: "icon-cog footer",    \
+                                                   title: "Change Footer",      \
+                                                   style: "font-size: 24px; color: black;", \
+                                                    data: { toggle: "tooltip",          \
+                                                            placement: "top" }
 
       br
       br

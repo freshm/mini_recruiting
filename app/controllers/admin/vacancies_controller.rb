@@ -95,6 +95,7 @@ class Admin::VacanciesController < ApplicationController
 
   def new_pdf
     @vacancy = Vacancy.find(params[:id])
+    @footer = PdfFooter.first.footer
 
     # PDFKit.new takes the HTML and any options for wkhtmltopdf
     # run `wkhtmltopdf --extended-help` for a full list of options

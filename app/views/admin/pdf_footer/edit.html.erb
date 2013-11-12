@@ -1,0 +1,9 @@
+<div class="page-header">
+	<h2>Change the Default Footer</h2>
+</div>
+<div class="col-md-offset-2 col-md-8">
+	<%= semantic_form_for [:admin,@footer] do |f| %>
+		<%= f.text_area :footer, class: "form-control" %>
+		<%= f.submit "Change Footer", class: "btn btn-primary btn-lg" %>
+	<% end %>
+</div>
