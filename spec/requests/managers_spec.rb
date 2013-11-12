@@ -4,15 +4,59 @@ describe "Managers" do
 	before(:each) do
 		@manager = FactoryGirl.create(:manager)
 		manager = FactoryGirl.create(:manager)
-		job_application = FactoryGirl.create(:job_application)
+		@job_application = FactoryGirl.create(:job_application)
 		visit "/users/sign_in"
 
 		fill_in "Email",    :with => @manager.email
 		fill_in "Password", :with => "testpass"
 
 		click_button "Sign in"
+
+		page.should have_content("Admin area")
 	end
 
+	it "can't see 'Apply now' for vacancies" do
+	    page.should have_content("Signed in successfully.")
+
+	    visit root_url
+
+	    page.should have_content(@job_application.vacancy.title)
+	    page.should have_content(@job_application.vacancy.location)
+
+	    click_link @job_application.vacancy.title
+
+   	    page.should_not have_content("Apply now")
+    end
+
+    it "can edit its profile" do
+    	click_link "Edit Profile"
+
+    	
+
+    	fill_in "Firstname", with: "New name"
+    	fill_in "Lastname", with: "New lastname"
+    	fill_in "Email", with: "new@email.de"
+    	fill_in "Current Password", with: "testpass"
+    	click_button "Update"
+
+    	page.should have_content "You updated your account successfully."
+    	page.should have_content "new@email.de"
+    end
+
+    it "can notedit its profile with invalid email" do
+    	click_link "Edit Profile"
+
+    	
+
+    	fill_in "Firstname", with: "New name"
+    	fill_in "Lastname", with: "New lastname"
+    	fill_in "Email", with: "newemail.de"
+    	fill_in "Current Password", with: "testpass"
+    	click_button "Update"
+    	
+    	page.should have_content "Email is invalid"
+    	page.should have_content @manager.email
+    end
 
 	it "can not see Users" do
 		page.should_not have_content("Users")

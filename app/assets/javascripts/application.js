@@ -23,6 +23,8 @@ $( document ).ready ( function() {
 	$(".applicant").tooltip();
 	$(".moderator").tooltip();
 	$(".footer").tooltip();
+	$(".rate_as_bad").tooltip();
+	$(".rate_as_good").tooltip();
 	$("#tabs").tabs();
 	//$(".accordion").accordion({ collapsible: true, header: "h3" });
 
