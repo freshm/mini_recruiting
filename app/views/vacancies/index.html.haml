@@ -8,17 +8,17 @@
       %tr
         %th Title
         %th Location
-        - if user_signed_in? && !current_user.admin?
+        - if user_signed_in? && can_apply?(current_user)
           %th Applied?
         %th Actions
     %tbody
       = content_tag_for(:tr, @vacancies) do |vacancy|
         %td= vacancy.title
         %td= vacancy.location
-        - if user_signed_in? && !current_user.admin? && vacancy.already_taken_by_user?(current_user)
+        - if user_signed_in? && can_apply?(current_user) && vacancy.already_taken_by_user?(current_user)
           %td.text-center
             %i.icon-check.applied
-        - elsif user_signed_in? && !current_user.admin? && !vacancy.already_taken_by_user?(current_user)
+        - elsif user_signed_in? && can_apply?(current_user) && !vacancy.already_taken_by_user?(current_user)
           %td.text-center
             %i.icon-check-empty.not-applied
         %td.text-center.inline

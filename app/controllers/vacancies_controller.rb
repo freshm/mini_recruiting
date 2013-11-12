@@ -19,13 +19,6 @@ class VacanciesController < ApplicationController
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @vacancy }
-      format.pdf {
-        html = render_to_string(:layout => "pdf.html.erb" , :action => "show.html.haml", :formats => [:html], :handler => [:haml])
-        kit = PDFKit.new(html)
-        kit.stylesheets << "#{Rails.root}/app/assets/stylesheets/application.css"
-        send_data(kit.to_pdf, :filename => "#{@vacancy.title}.pdf", :type => 'application/pdf')
-        return # to avoid double render call
-      }
     end
   end
 

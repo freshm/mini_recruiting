@@ -29,7 +29,7 @@
       %blockquote
         %p #{@vacancy.display_user_details(current_user)[1]}
       = link_to "Want to change the details?", edit_applicant_job_application_path(current_user.id, @vacancy.display_user_details(current_user)[2]), class: "btn btn-danger"
-      = link_to "Back", root_path, class: "btn btn-warning"
+      = link_to "Back", :back, class: "btn btn-warning"
     - else
       %br
       .col-md-offset-1

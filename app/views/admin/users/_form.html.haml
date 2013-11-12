@@ -9,7 +9,7 @@
           %li= msg
 
   = f.inputs name: "Personal" do
-    = f.input :firstname
+    = f.input :firstname, html: {class: "form-control"}
     = f.input :lastname
     = f.input :email
   / = f.input :type, as: :radio, collection: ["Admin", "Manager", "Applicant"], include_blank: false

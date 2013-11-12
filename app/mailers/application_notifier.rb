@@ -19,10 +19,11 @@ class ApplicationNotifier < ActionMailer::Base
   #
   #   en.application_notifier.forwarded_application.subject
   #
-  def forwarded_application(moderator, vacancy, user)
-    @moderator = moderator
-    @vacancy = vacancy
-    @user = user
+  def forwarded_application(assignment)
+    @moderator = assignment.manager
+    @vacancy = assignment.job_application.vacancy
+    @user = assignment.job_application.user
+    @assignment = assignment
 
     mail to: @moderator.email, subject: "A job apllication was forwarded to you."
   end
@@ -36,11 +37,8 @@ class ApplicationNotifier < ActionMailer::Base
     @moderator = moderator
     @vacancy = vacancy
     @user = user
-    admins = Admin.all
 
-    admins.each do |admin|
-      mail to: admin.email, subject: "Application by #{@user.fullname} for #{@vacancy.title} was reviewed by #{@moderator.fullname} as good"
-    end
+    mail to: @vacancy.admin.email, subject: "Application by #{@user.fullname} for #{@vacancy.title} was reviewed by #{@moderator.fullname} as good"
   end
 
 
@@ -48,11 +46,8 @@ class ApplicationNotifier < ActionMailer::Base
     @moderator = moderator
     @vacancy = vacancy
     @user = user
-    admins = Admin.all
 
-    admins.each do |admin|
-      mail to: admin.email, subject: "Application by #{@user.fullname} for #{@vacancy.title} was reviewed by #{@moderator.fullname} as bad"
-    end
+    mail to: @vacancy.admin.email, subject: "Application by #{@user.fullname} for #{@vacancy.title} was reviewed by #{@moderator.fullname} as bad"
   end
 
 

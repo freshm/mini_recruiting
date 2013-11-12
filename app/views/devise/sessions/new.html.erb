@@ -1,13 +1,13 @@
-<h2>Sign in</h2>
+<div class="col-md-offset-2 col-md-8">
+	<h2>Sign in</h2>
 
-<%= semantic_form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f| %>
-  <%= f.inputs name: "Personal" do %>
-      <%= f.input :email %>
-      <%= f.input :password %>
-      <% if devise_mapping.rememberable? -%>
-	    <div><%= f.check_box :remember_me %> <%= f.label :remember_me %></div>
-	  <% end -%>
-  <% end %>
+	<%= semantic_form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f| %>
+	  <%= f.inputs name: "Personal" do %>
+	      <%= f.input :email, input_html: {class: "form-control"} %>
+	      <%= f.input :password , input_html: {class: "form-control"} %>
+	  <% end %>
+	  <br />
 
-  <%= f.action :submit, :button_html => { :class => 'btn btn-primary' }, label: "Sign in" %>
-<% end %>
+	  <%= f.action :submit, :button_html => { :class => 'btn btn-primary' }, label: "Sign in" %>
+	<% end %>
+</div>

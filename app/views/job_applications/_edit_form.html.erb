@@ -1,23 +1,25 @@
-<%= semantic_form_for([:applicant, @job_application], :html => { :class => "form-horizontal" }) do |f| %>
-  <% if @job_application.errors.any? %>
-    <div class="alert alert-danger alert-dismissable">
-      <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-      <h4><%= pluralize(@job_application.errors.count, "error") %> prohibited this job_application from being saved:</h4>
+<div class="col-md-offset-2 col-md-8">
+  <%= semantic_form_for([:applicant, @job_application], :html => { :class => "form-horizontal" }) do |f| %>
+    <% if @job_application.errors.any? %>
+      <div class="alert alert-danger alert-dismissable">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+        <h4><%= pluralize(@job_application.errors.count, "error") %> prohibited this job_application from being saved:</h4>
 
-      <ul>
-      <% @job_application.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
-  <%= f.inputs :name => "Your details" do %>
-      <%= f.input :salary, :input_html => { :style => "height: 25px"} %>
-      <%= f.input :note, :input_html => { :class => 'autogrow', :rows => 6, :cols => 20 } %>
-  <% end %>
-  
+        <ul>
+        <% @job_application.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+        </ul>
+      </div>
+    <% end %>
+    <%= f.inputs :name => "Your details" do %>
+        <%= f.input :salary, :input_html => { :style => "height: 25px", class: "form-control"} %>
+        <%= f.input :note, :input_html => { :class => 'autogrow form-control', :rows => 6, :cols => 20 } %>
+    <% end %>
+    
 
-  <%= f.actions do %>
-      <%= f.action :submit, :as => :button %>
+    <%= f.actions do %>
+        <%= f.action :submit, :as => :button %>
+    <% end %>
   <% end %>
-<% end %>
+</div>

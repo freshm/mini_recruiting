@@ -5,13 +5,13 @@
         .page-header
           %h1 Sign up
         = f.inputs name: "Personal" do
-          = f.input :firstname
-          = f.input :lastname
-          = f.input :email
+          = f.input :firstname, input_html: {class: "form-control"}
+          = f.input :lastname, input_html: {class: "form-control"}
+          = f.input :email, input_html: {class: "form-control"}
 
         = f.inputs name: "Security" do
-          = f.input :password
-          = f.input :password_confirmation
+          = f.input :password, input_html: {class: "form-control"}
+          = f.input :password_confirmation, input_html: {class: "form-control"}
         %br
 
       .col-md-6
@@ -19,8 +19,8 @@
           %h1 Application for #{ @vacancy.title }
         = f.semantic_fields_for :job_application, @applicant.job_applications.build do |h|
           = h.inputs name: "Your application details" do
-            = h.input :salary, input_html: { style: "height: 25px" }
-            = h.input :note, input_html: { class: "autogrow", rows: 6, cols: 20}
+            = h.input :salary, input_html: { style: "height: 32px", class: "form-control"}
+            = h.input :note, input_html: { class: "autogrow form-control", rows: 6, cols: 20}
 
     %br
 

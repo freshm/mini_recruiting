@@ -5,6 +5,7 @@ describe ApplicationNotifier do
     @user = FactoryGirl.create(:user)
     @vacancy = FactoryGirl.create(:vacancy)
     @manager = FactoryGirl.create(:manager)
+    @assignment = FactoryGirl.create(:job_assignment)
   end
   describe "new_application" do
     let(:mail) { ApplicationNotifier.new_application(@vacancy, @user) }
@@ -29,24 +30,24 @@ describe ApplicationNotifier do
   end
 
   describe "forwarded_application" do
-    let(:mail) { ApplicationNotifier.forwarded_application(@manager, @vacancy, @user) }
+    let(:mail) { ApplicationNotifier.forwarded_application(@assignment) }
 
     it "renders the headers" do
       mail.subject.should eq("A job apllication was forwarded to you.")
-      mail.to.should eq([@manager.email])
+      mail.to.should eq([@assignment.manager.email])
       mail.from.should eq(["admin@mini-recruiting.com"])
     end
 
     it "contains the moderators name" do
-      mail.body.encoded.should match(@manager.fullname)
+      mail.body.encoded.should match(@assignment.manager.fullname)
     end
 
     it "contains the users name" do
-      mail.body.encoded.should match(@user.fullname)
+      mail.body.encoded.should match(@assignment.job_application.user.fullname)
     end
 
     it "contains the vacancy title" do
-      mail.body.encoded.should match(@vacancy.title)
+      mail.body.encoded.should match(@assignment.job_application.vacancy.title)
     end
   end
 
@@ -55,7 +56,7 @@ describe ApplicationNotifier do
 
     it "renders the headers" do
       mail.subject.should eq("Application by #{@user.fullname} for #{@vacancy.title} was reviewed by #{@manager.fullname} as good")
-      mail.to.should eq([Admin.first.email])
+      mail.to.should eq([@vacancy.admin.email])
       mail.from.should eq(["admin@mini-recruiting.com"])
     end
 

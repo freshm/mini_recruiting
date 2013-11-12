@@ -1,6 +1,6 @@
 <p>Dear <%= @moderator.fullname %>,</p>
 <p>
-	an admin forwarded a <%= link_to  "job application", admin_job_application_url(@vacancy.id) %> from <%= @user.fullname %> for <%= @vacancy.title %> to you to review it.
+	an admin forwarded a <%= link_to  "job application", admin_job_assignment_url(@assignment.id) %> from <%= @user.fullname %> for <%= @vacancy.title %> to you to review it.
 	Please do so in the near future.
 </p>
 <p>

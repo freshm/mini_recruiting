@@ -18,7 +18,7 @@ class Vacancy < ActiveRecord::Base
   def display_user_details(user)
     application = user.job_applications.find_by_vacancy_id(self.id)
     salary = application.salary || "You haven't entered a salary"
-    application.note = "You haven't entered a note" if application.note.empty?
+    application.note = "You haven't entered a note" if application.note.nil? || application.note.empty?
     [salary, application.note, application.id]
   end
 end

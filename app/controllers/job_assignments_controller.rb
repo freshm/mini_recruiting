@@ -7,7 +7,7 @@ class JobAssignmentsController < ApplicationController
 		@assignment = JobAssignment.new(manager_id: manager_id, job_application_id: application_id)
 
 		if @assignment.save
-			ApplicationNotifier.forwarded_application(Manager.find_by_id(manager_id), j.vacancy, j.user).deliver
+			ApplicationNotifier.forwarded_application(@assignment).deliver
 			respond_to do |format|
 		      format.html { redirect_to admin_job_application_path(@assignment.job_application.vacancy.id), notice: "Assigned #{@assignment.manager.fullname}" }
 		      format.js
