@@ -5,5 +5,6 @@
 	<%= semantic_form_for [:admin,@footer] do |f| %>
 		<%= f.text_area :footer, class: "form-control" %>
 		<%= f.submit "Change Footer", class: "btn btn-primary btn-lg" %>
+		<%= link_to "Back", :back, class: "btn btn-warning btn-lg" %>
 	<% end %>
 </div>
